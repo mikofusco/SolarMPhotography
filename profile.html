@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SolarM Photography — Miko Fusco</title>
-<meta name="description" content="SolarM Photography — headshots, Korean-style portraits, and editorial shoots by Miko Fusco. Book your session online.">
+<title>My Profile — SolarM Photography</title>
+<meta name="description" content="Manage your SolarM Photography account details.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
@@ -54,85 +54,67 @@
 </header>
 
 <main>
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="eclipse-visual" aria-hidden="true"></div>
-    <div class="hero-content">
-      <span class="eyebrow">New York City · Seoul</span>
-      <h1>Solar<span>M</span> Photography</h1>
-      <p class="tag">Portraits, headshots, and editorial work by Miko Fusco — where visual media meets the quiet drama of a total eclipse.</p>
-      <div class="hero-ctas">
-        <a href="book.html" class="btn btn-gold">Book a Session</a>
-        <a href="#services" class="btn btn-ghost">View Services</a>
-      </div>
-    </div>
-    <div class="scroll-cue">Scroll</div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="wrap about-grid">
-      <div class="about-photo"><div class="ph-label">Portrait of Miko Fusco<br>(add your photo here)</div></div>
-      <div class="about-copy">
-        <span class="eyebrow">About the Photographer</span>
-        <h2>Hi, I'm Miko.</h2>
-        <p>I'm a video producer and photographer with over 10 years of experience in visual media. I've lived and worked in New York City, as well as Seoul, South Korea — two cities that shaped how I see light, people, and story.</p>
-        <p>Working with outlets such as EnVi Media and NABI Magazine, I've taken on a wide range of photo work, from editorial campaigns to intimate portrait sessions. Now, I'm ready to set up shop myself and work with you directly.</p>
-        <ul class="about-list">
-          <li>Professional headshots for LinkedIn, branding, and casting</li>
-          <li>Korean-style portrait sessions inspired by Seoul's studio aesthetic</li>
-          <li>Editorial and campaign photography for brands and publications</li>
-          <li>A decade of visual media experience across two continents</li>
-        </ul>
-        <p class="about-credit">Featured with EnVi Media &amp; NABI Magazine</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="section" id="services">
+  <section class="page-hero">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Services &amp; Pricing</span>
-        <h2>What I offer</h2>
-        <p>Every session is booked online in a few simple steps — pick a service, choose a time, and you're set.</p>
-      </div>
-      <div class="services-grid">
-        <div class="svc-card">
-          <div class="svc-price">$179</div>
-          <h3>Headshot Standard</h3>
-          <p>A focused headshot session. Includes one standard retouched headshot and the corresponding raw image. Does not include makeup or styling services.</p>
-          <div class="svc-note">~60 min session</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-price">$329</div>
-          <h3>Korean Style Portraits</h3>
-          <p>Soft, editorial portrait work inspired by Seoul studio photography — a curated set of retouched images with a distinct look.</p>
-          <div class="svc-note">~90 min session</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-price">$500–$750</div>
-          <h3>Editorial Shoots</h3>
-          <p>Full editorial or campaign-style shoots for brands, publications, and artists. Final pricing is scoped to concept, location, and deliverables.</p>
-          <div class="svc-note">~2 hr session · $500 deposit due at booking</div>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:44px;">
-        <a href="book.html" class="btn btn-gold">Book a Session</a>
-      </div>
+      <span class="eyebrow">Your Account</span>
+      <h1>My Profile</h1>
+      <p>Update your details, contact info, and profile picture.</p>
     </div>
   </section>
 
-  <!-- MEMBERSHIP -->
-  <section class="section" style="padding-top:0;">
+  <section class="section" style="padding-top:20px;">
     <div class="wrap">
-      <div class="membership-banner">
-        <div>
-          <h3>Join the SolarM Membership</h3>
-          <p>Sign up for a free account to save your details for faster booking, and unlock <span class="membership-code">15% off</span> your first session.</p>
-        </div>
-        <button class="btn btn-gold" id="openSignUpBanner">Sign Up &amp; Save 15%</button>
+
+      <div class="signin-gate" id="signinGate" style="display:none;">
+        <h3>Sign in to manage your profile</h3>
+        <p>Create a free account or sign in to edit your details.</p>
+        <button class="btn btn-gold" id="gateSignIn">Sign In</button>
       </div>
+
+      <div class="profile-shell" id="profileShell" style="display:none;">
+        <div class="avatar-row">
+          <div class="avatar-preview" id="avatarPreview"></div>
+          <div class="avatar-actions">
+            <label class="btn btn-ghost btn-sm" for="avatarInput">Upload photo</label>
+            <input type="file" id="avatarInput" accept="image/*">
+            <button class="btn btn-ghost btn-sm" id="removeAvatarBtn" type="button">Remove photo</button>
+          </div>
+        </div>
+
+        <form id="profileForm">
+          <div class="form-grid">
+            <div class="field">
+              <label>First Name <span class="req">*</span></label>
+              <input type="text" id="pfFirst" autocomplete="given-name" required>
+              <div class="error-text"></div>
+            </div>
+            <div class="field">
+              <label>Last Name <span class="req">*</span></label>
+              <input type="text" id="pfLast" autocomplete="family-name" required>
+              <div class="error-text"></div>
+            </div>
+            <div class="field">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" id="pfEmail" autocomplete="email" required>
+              <div class="error-text"></div>
+            </div>
+            <div class="field">
+              <label>Phone Number</label>
+              <input type="tel" id="pfPhone" placeholder="(555) 555-5555" autocomplete="tel">
+            </div>
+            <div class="field full">
+              <label>New Password</label>
+              <input type="password" id="pfPassword" autocomplete="new-password" placeholder="Leave blank to keep your current password">
+              <div class="form-note">Only fill this in if you want to change it.</div>
+            </div>
+          </div>
+          <div class="auth-msg" id="pfMsg" style="margin-top:14px;"></div>
+          <div class="save-row">
+            <button class="btn btn-gold" type="submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </section>
 </main>
@@ -183,7 +165,7 @@
 
     <div class="modal-pane active" id="paneSignin">
       <h3>Welcome back</h3>
-      <p class="modal-sub">Sign in to speed through your next booking.</p>
+      <p class="modal-sub">Sign in to manage your profile.</p>
       <form id="signInForm">
         <div class="field" style="margin-bottom:14px;">
           <label>Email</label>
@@ -222,5 +204,6 @@
 <div class="toast" id="toast"></div>
 
 <script src="assets/app.js"></script>
+<script src="assets/profile.js"></script>
 </body>
 </html>
