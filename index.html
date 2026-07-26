@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarM Photography — Miko Fusco</title>
+<meta name="description" content="SolarM Photography — headshots, Korean-style portraits, and editorial shoots by Miko Fusco. Book your session online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#050609;
+    --navy-deep:#0a0e1f;
+    --navy:#101838;
+    --navy-light:#1b2555;
+    --navy-glow:#2a3a7a;
+    --gold:#cda34a;
+    --gold-bright:#e8c877;
+    --gold-dim:#8a6f33;
+    --white:#f7f7f9;
+    --offwhite:#e9e9ef;
+    --muted:#9a9db2;
+    --line:rgba(247,247,249,0.10);
+    --danger:#e2685a;
+    --success:#5ac98a;
+    --radius:14px;
+    --maxw:1180px;
+    font-size:16px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  section[id],footer[id]{scroll-margin-top:84px;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--black);
+    color:var(--offwhite);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;color:var(--white);}
+  button,input,select,textarea{font-family:inherit;font-size:1rem;color:inherit;}
+  button{cursor:pointer;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-size:0.72rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--gold);display:inline-block;margin-bottom:14px;
+  }
+  .section{padding:110px 0;position:relative;}
+  .section-head{max-width:640px;margin:0 auto 56px;text-align:center;}
+  .section-head h2{font-size:clamp(1.9rem,3.4vw,2.6rem);margin-bottom:14px;}
+  .section-head p{color:var(--muted);font-size:1.05rem;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:15px 30px;border-radius:999px;font-weight:600;font-size:0.95rem;
+    border:1px solid transparent;transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+    white-space:nowrap;
+  }
+  .btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold-dim));color:#1a1305;box-shadow:0 8px 24px rgba(205,163,74,0.25);}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(205,163,74,0.38);}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--white);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);}
+  .btn-block{width:100%;}
+  .btn[disabled]{opacity:0.4;cursor:not-allowed;transform:none !important;box-shadow:none !important;}
+  .btn-sm{padding:10px 18px;font-size:0.85rem;}
+
+  /* ── STAR FIELD (fixed, whole page) ─────────────────── */
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(42,58,122,0.35), transparent 60%),
+    radial-gradient(ellipse 100% 60% at 80% 100%, rgba(42,58,122,0.2), transparent 60%),
+    var(--black);
+  }
+  #stars .layer{position:absolute;inset:0;}
+
+  /* ── NAV ─────────────────────────────────────────────── */
+  header.nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(5,6,9,0.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.15rem;color:var(--white);white-space:nowrap;flex:none;}
+  .brand .eclipse-mark{width:26px;height:26px;border-radius:50%;background:#000;box-shadow:0 0 0 2px var(--gold), 0 0 16px 2px rgba(205,163,74,0.55);position:relative;flex:none;}
+  .brand .eclipse-mark::after{content:'';position:absolute;top:2px;left:4px;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #1b2555, #050609 70%);}
+  nav.links{display:flex;align-items:center;gap:30px;}
+  nav.links a{font-size:0.92rem;color:var(--offwhite);transition:color .15s ease;}
+  nav.links a:hover{color:var(--gold-bright);}
+  .nav-actions{display:flex;align-items:center;gap:12px;}
+  .nav-user{font-size:0.88rem;color:var(--muted);display:flex;align-items:center;gap:10px;}
+  .nav-user strong{color:var(--gold-bright);font-weight:600;}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:6px;flex:none;}
+  .hamburger span{width:22px;height:2px;background:var(--white);display:block;}
+  .mobile-auth{display:none;}
+  .mobile-auth.is-hidden{display:none !important;}
+
+  /* ── HERO ────────────────────────────────────────────── */
+  .hero{
+    position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:100px 28px 80px;overflow:hidden;
+  }
+  .eclipse-visual{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);
+    width:min(560px,80vw);height:min(560px,80vw);border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #12173a 0%, #050609 60%);
+    box-shadow:
+      0 0 0 1px rgba(205,163,74,0.15),
+      0 0 60px 14px rgba(205,163,74,0.28),
+      0 0 140px 40px rgba(42,58,122,0.35);
+    z-index:0;
+  }
+  .eclipse-visual::before{
+    content:'';position:absolute;inset:-30px;border-radius:50%;
+    background:conic-gradient(from 0deg, transparent 0deg, rgba(232,200,119,0.55) 8deg, transparent 26deg, transparent 190deg, rgba(232,200,119,0.35) 210deg, transparent 230deg);
+    filter:blur(6px);
+    animation:spin 34s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .hero-content{position:relative;z-index:2;max-width:760px;}
+  .hero h1{font-size:clamp(2.6rem,7vw,4.6rem);line-height:1.02;margin-bottom:20px;}
+  .hero h1 span{color:var(--gold-bright);}
+  .hero p.tag{font-size:1.15rem;color:var(--offwhite);opacity:0.82;max-width:520px;margin:0 auto 38px;}
+  .hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);z-index:2;}
+
+  /* ── ABOUT ───────────────────────────────────────────── */
+  .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:center;}
+  .about-photo{
+    aspect-ratio:4/5;border-radius:var(--radius);
+    background:linear-gradient(160deg,var(--navy-light),var(--navy-deep));
+    border:1px solid var(--line);position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .about-photo::after{content:'';position:absolute;inset:0;border-radius:var(--radius);box-shadow:inset 0 0 0 1px rgba(205,163,74,0.25);}
+  .about-photo .ph-label{color:var(--muted);font-size:0.85rem;text-align:center;padding:20px;}
+  .about-copy h2{font-size:clamp(1.8rem,3vw,2.3rem);margin-bottom:18px;}
+  .about-copy p{color:var(--offwhite);opacity:0.88;margin-bottom:16px;}
+  .about-list{list-style:none;margin-top:26px;display:grid;gap:14px;}
+  .about-list li{display:flex;gap:12px;align-items:flex-start;color:var(--offwhite);opacity:0.92;}
+  .about-list li::before{
+    content:'';flex:none;width:9px;height:9px;margin-top:7px;border-radius:50%;
+    background:var(--gold-bright);box-shadow:0 0 8px 1px rgba(232,200,119,0.6);
+  }
+  .about-credit{margin-top:26px;font-size:0.85rem;color:var(--muted);letter-spacing:0.02em;}
+
+  /* ── SERVICES ────────────────────────────────────────── */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .svc-card{
+    background:linear-gradient(180deg,rgba(27,37,85,0.35),rgba(10,14,31,0.4));
+    border:1px solid var(--line);border-radius:var(--radius);padding:32px 26px;
+    display:flex;flex-direction:column;gap:14px;transition:border-color .2s ease, transform .2s ease;
+  }
+  .svc-card:hover{border-color:rgba(205,163,74,0.45);transform:translateY(-4px);}
+  .svc-card .svc-price{font-family:'Space Grotesk',sans-serif;font-size:2rem;color:var(--gold-bright);}
+  .svc-card h3{font-size:1.2rem;}
+  .svc-card p{color:var(--muted);font-size:0.92rem;flex:1;}
+  .svc-note{font-size:0.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;}
+
+  /* ── BOOKING WIZARD ──────────────────────────────────── */
+  .booking-shell{
+    background:linear-gradient(180deg,rgba(16,24,56,0.55),rgba(5,6,9,0.55));
+    border:1px solid var(--line);border-radius:20px;padding:40px;
+    scroll-margin-top:96px;
+  }
+  .steps-bar{display:flex;justify-content:space-between;gap:8px;margin-bottom:44px;flex-wrap:wrap;}
+  .step-pill{display:flex;align-items:center;gap:10px;flex:1;min-width:130px;opacity:0.45;transition:opacity .2s ease;}
+  .step-pill.active,.step-pill.done{opacity:1;}
+  .step-pill .num{
+    width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+    font-size:0.8rem;font-weight:600;flex:none;color:var(--muted);
+  }
+  .step-pill.active .num{border-color:var(--gold);color:var(--gold-bright);box-shadow:0 0 0 3px rgba(205,163,74,0.15);}
+  .step-pill.done .num{background:var(--gold-bright);color:#1a1305;border-color:var(--gold-bright);}
+  .step-pill .lbl{font-size:0.82rem;color:var(--offwhite);}
+  .step-panel{display:none;}
+  .step-panel.active{display:block;animation:fadein .35s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .step-panel h3{font-size:1.4rem;margin-bottom:6px;}
+  .step-panel .step-sub{color:var(--muted);font-size:0.92rem;margin-bottom:28px;}
+
+  .svc-choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .svc-choice{
+    border:1px solid var(--line);border-radius:12px;padding:20px;text-align:left;background:rgba(255,255,255,0.02);
+    display:flex;flex-direction:column;gap:8px;transition:border-color .15s ease, background .15s ease;
+  }
+  .svc-choice:hover{border-color:rgba(205,163,74,0.4);}
+  .svc-choice.selected{border-color:var(--gold-bright);background:rgba(205,163,74,0.08);}
+  .svc-choice .radio-dot{width:16px;height:16px;border-radius:50%;border:1px solid var(--muted);position:relative;}
+  .svc-choice.selected .radio-dot{border-color:var(--gold-bright);}
+  .svc-choice.selected .radio-dot::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--gold-bright);}
+  .svc-choice .price{color:var(--gold-bright);font-weight:600;}
+  .svc-choice .desc{font-size:0.85rem;color:var(--muted);}
+
+  .cal-time-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;}
+  .calendar{border:1px solid var(--line);border-radius:12px;padding:20px;}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .cal-head .month-lbl{font-family:'Space Grotesk',sans-serif;font-weight:600;}
+  .cal-nav-btn{background:none;border:1px solid var(--line);border-radius:8px;width:32px;height:32px;color:var(--white);}
+  .cal-nav-btn:hover{border-color:var(--gold);}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;}
+  .cal-grid .dow{font-size:0.72rem;color:var(--muted);padding-bottom:6px;}
+  .cal-day{
+    aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;
+    font-size:0.88rem;border:1px solid transparent;background:rgba(255,255,255,0.02);color:var(--offwhite);
+  }
+  .cal-day.blank{background:none;}
+  .cal-day.disabled{color:var(--muted);opacity:0.35;background:none;}
+  .cal-day.selectable:hover{border-color:rgba(205,163,74,0.5);cursor:pointer;}
+  .cal-day.selected{background:var(--gold-bright);color:#1a1305;font-weight:700;}
+  .cal-day.today{box-shadow:inset 0 0 0 1px var(--gold-dim);}
+  .cal-legend{margin-top:14px;font-size:0.78rem;color:var(--muted);}
+
+  .time-col{border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;}
+  .time-col .time-head{font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:14px;}
+  .time-slots{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .time-slot{
+    padding:12px 10px;border-radius:8px;border:1px solid var(--line);text-align:center;font-size:0.9rem;
+    background:rgba(255,255,255,0.02);color:var(--offwhite);
+  }
+  .time-slot.selectable:hover{border-color:var(--gold);cursor:pointer;}
+  .time-slot.selected{background:var(--gold-bright);color:#1a1305;font-weight:600;border-color:var(--gold-bright);}
+  .time-slot.blocked{opacity:0.32;text-decoration:line-through;cursor:not-allowed;}
+  .time-empty{color:var(--muted);font-size:0.88rem;}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .field{display:flex;flex-direction:column;gap:7px;}
+  .field.full{grid-column:1 / -1;}
+  .field label{font-size:0.82rem;color:var(--muted);}
+  .field label .req{color:var(--gold-bright);}
+  .field input[type=text],.field input[type=email],.field input[type=tel],.field input[type=password],.field select,.field textarea{
+    background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:9px;padding:12px 14px;color:var(--white);
+    outline:none;transition:border-color .15s ease;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
+  .field textarea{resize:vertical;min-height:90px;}
+  .radio-row{display:flex;gap:18px;flex-wrap:wrap;}
+  .radio-chip{display:flex;align-items:center;gap:7px;font-size:0.9rem;color:var(--offwhite);}
+  .radio-chip input{accent-color:var(--gold);}
+
+  .review-box{border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:26px;}
+  .review-row{display:flex;justify-content:space-between;padding:8px 0;font-size:0.92rem;border-bottom:1px solid var(--line);}
+  .review-row:last-child{border-bottom:none;}
+  .review-row .k{color:var(--muted);}
+  .review-row.total{font-weight:700;font-size:1.05rem;color:var(--gold-bright);}
+  .promo-row{display:flex;gap:10px;margin:18px 0;}
+  .promo-row input{flex:1;}
+  .promo-msg{font-size:0.82rem;margin-top:6px;}
+  .promo-msg.ok{color:var(--success);}
+  .promo-msg.err{color:var(--danger);}
+
+  .pay-card{border:1px solid var(--line);border-radius:12px;padding:24px;}
+  .pay-secure{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--muted);margin-bottom:18px;}
+  .pay-secure svg{flex:none;}
+
+  .wizard-nav{display:flex;justify-content:space-between;margin-top:34px;}
+
+  .confirm-wrap{text-align:center;padding:30px 0 10px;}
+  .confirm-check{
+    width:64px;height:64px;border-radius:50%;margin:0 auto 22px;background:radial-gradient(circle,rgba(90,201,138,0.2),transparent 70%);
+    display:flex;align-items:center;justify-content:center;border:1px solid var(--success);
+  }
+  .confirm-wrap h3{font-size:1.6rem;margin-bottom:10px;}
+  .confirm-id{color:var(--gold-bright);font-family:'Space Grotesk',sans-serif;font-size:1.1rem;margin-bottom:26px;}
+  .confirm-summary{max-width:420px;margin:0 auto 30px;text-align:left;}
+
+  .field-error{border-color:var(--danger) !important;}
+  .error-text{color:var(--danger);font-size:0.78rem;min-height:16px;}
+
+  /* ── MEMBERSHIP BANNER ───────────────────────────────── */
+  .membership-banner{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    background:linear-gradient(120deg,rgba(205,163,74,0.14),rgba(16,24,56,0.4));
+    border:1px solid rgba(205,163,74,0.35);border-radius:18px;padding:36px 40px;
+  }
+  .membership-banner h3{font-size:1.4rem;margin-bottom:8px;}
+  .membership-banner p{color:var(--muted);max-width:480px;}
+  .membership-code{
+    font-family:'Space Grotesk',sans-serif;letter-spacing:0.08em;background:rgba(0,0,0,0.35);
+    border:1px dashed var(--gold);border-radius:8px;padding:6px 12px;color:var(--gold-bright);font-size:0.95rem;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────────── */
+  footer{border-top:1px solid var(--line);padding:50px 0 34px;color:var(--muted);font-size:0.88rem;}
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:26px;}
+  .footer-grid a{color:var(--offwhite);}
+  .footer-grid a:hover{color:var(--gold-bright);}
+  .footer-cols{display:flex;gap:60px;flex-wrap:wrap;}
+  .footer-cols h4{font-size:0.82rem;color:var(--white);margin-bottom:12px;letter-spacing:0.04em;}
+  .footer-cols ul{list-style:none;display:grid;gap:8px;}
+  .footer-bottom{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* ── MODAL (AUTH) ─────────────────────────────────────── */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(2,3,8,0.72);backdrop-filter:blur(4px);
+    display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    width:100%;max-width:420px;background:var(--navy-deep);border:1px solid var(--line);border-radius:18px;
+    padding:34px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+  .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:1.3rem;line-height:1;}
+  .modal-close:hover{color:var(--white);}
+  .modal-tabs{display:flex;gap:6px;background:rgba(255,255,255,0.04);border-radius:10px;padding:4px;margin-bottom:24px;}
+  .modal-tab{flex:1;text-align:center;padding:9px 0;border-radius:8px;font-size:0.88rem;color:var(--muted);}
+  .modal-tab.active{background:var(--gold-bright);color:#1a1305;font-weight:600;}
+  .modal-pane{display:none;flex-direction:column;gap:14px;}
+  .modal-pane.active{display:flex;}
+  .modal-box h3{margin-bottom:4px;}
+  .modal-sub{color:var(--muted);font-size:0.85rem;margin-bottom:8px;}
+  .check-row{display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--offwhite);background:rgba(205,163,74,0.08);border:1px solid rgba(205,163,74,0.3);border-radius:10px;padding:12px 14px;}
+  .check-row input{margin-top:3px;accent-color:var(--gold);}
+  .auth-msg{font-size:0.82rem;min-height:18px;}
+  .auth-msg.err{color:var(--danger);}
+  .auth-msg.ok{color:var(--success);}
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--navy-deep);border:1px solid var(--gold);border-radius:12px;padding:14px 22px;
+    color:var(--white);font-size:0.9rem;z-index:1200;opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:900px){
+    nav.links{display:none;}
+    .hamburger{display:flex;}
+    .desktop-auth{display:none !important;}
+    .about-grid{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr;}
+    .svc-choice-grid{grid-template-columns:1fr;}
+    .cal-time-grid{grid-template-columns:1fr;}
+    .form-grid{grid-template-columns:1fr;}
+    .steps-bar{gap:14px;}
+    .step-pill .lbl{display:none;}
+    .booking-shell{padding:24px;}
+    .membership-banner{flex-direction:column;align-items:flex-start;}
+  }
+  @media (max-width:900px){
+    nav.links.mobile-open{
+      display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;
+      background:var(--navy-deep);border-bottom:1px solid var(--line);padding:20px 28px;gap:16px;
+    }
+    nav.links.mobile-open .mobile-auth{
+      display:flex;flex-direction:column;gap:10px;margin-top:6px;padding-top:16px;border-top:1px solid var(--line);
+    }
+  }
+</style>
+</head>
+<body>
+<div id="stars"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="brand"><span class="eclipse-mark"></span>SolarM Photography</a>
+    <nav class="links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#book">Book Now</a>
+      <a href="#contact">Contact</a>
+      <div class="mobile-auth" id="mobileSignedOutActions">
+        <button class="btn btn-ghost btn-sm btn-block" id="openSignInMobile">Sign In</button>
+        <button class="btn btn-gold btn-sm btn-block" id="openSignUpMobile">Sign Up</button>
+      </div>
+      <div class="mobile-auth nav-user is-hidden" id="mobileSignedInActions">
+        <span>Hi, <strong id="navUserNameMobile"></strong></span>
+        <button class="btn btn-ghost btn-sm btn-block" id="signOutBtnMobile">Sign Out</button>
+      </div>
+    </nav>
+    <div class="nav-actions">
+      <div id="signedOutActions" class="nav-actions desktop-auth">
+        <button class="btn btn-ghost btn-sm" id="openSignIn">Sign In</button>
+        <button class="btn btn-gold btn-sm" id="openSignUp">Sign Up</button>
+      </div>
+      <div id="signedInActions" class="nav-user desktop-auth" style="display:none;">
+        <span>Hi, <strong id="navUserName"></strong></span>
+        <button class="btn btn-ghost btn-sm" id="signOutBtn">Sign Out</button>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="eclipse-visual" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow">New York City · Seoul</span>
+      <h1>Solar<span>M</span> Photography</h1>
+      <p class="tag">Portraits, headshots, and editorial work by Miko Fusco — where visual media meets the quiet drama of a total eclipse.</p>
+      <div class="hero-ctas">
+        <a href="#book" class="btn btn-gold">Book a Session</a>
+        <a href="#services" class="btn btn-ghost">View Services</a>
+      </div>
+    </div>
+    <div class="scroll-cue">Scroll</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="wrap about-grid">
+      <div class="about-photo"><div class="ph-label">Portrait of Miko Fusco<br>(add your photo here)</div></div>
+      <div class="about-copy">
+        <span class="eyebrow">About the Photographer</span>
+        <h2>Hi, I'm Miko.</h2>
+        <p>I'm a video producer and photographer with over 10 years of experience in visual media. I've lived and worked in New York City, as well as Seoul, South Korea — two cities that shaped how I see light, people, and story.</p>
+        <p>Working with outlets such as EnVi Media and NABI Magazine, I've taken on a wide range of photo work, from editorial campaigns to intimate portrait sessions. Now, I'm ready to set up shop myself and work with you directly.</p>
+        <ul class="about-list">
+          <li>Professional headshots for LinkedIn, branding, and casting</li>
+          <li>Korean-style portrait sessions inspired by Seoul's studio aesthetic</li>
+          <li>Editorial and campaign photography for brands and publications</li>
+          <li>A decade of visual media experience across two continents</li>
+        </ul>
+        <p class="about-credit">Featured with EnVi Media &amp; NABI Magazine</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Services &amp; Pricing</span>
+        <h2>What I offer</h2>
+        <p>Every session is booked online in a few simple steps — pick a service, choose a time, and you're set.</p>
+      </div>
+      <div class="services-grid">
+        <div class="svc-card">
+          <div class="svc-price">$179</div>
+          <h3>Headshot Standard</h3>
+          <p>A focused headshot session. Includes one standard retouched headshot and the corresponding raw image. Does not include makeup or styling services.</p>
+          <div class="svc-note">~60 min session</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-price">$329</div>
+          <h3>Korean Style Portraits</h3>
+          <p>Soft, editorial portrait work inspired by Seoul studio photography — a curated set of retouched images with a distinct look.</p>
+          <div class="svc-note">~90 min session</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-price">$500–$750</div>
+          <h3>Editorial Shoots</h3>
+          <p>Full editorial or campaign-style shoots for brands, publications, and artists. Final pricing is scoped to concept, location, and deliverables.</p>
+          <div class="svc-note">~2 hr session · $500 deposit due at booking</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBERSHIP -->
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="membership-banner">
+        <div>
+          <h3>Join the SolarM Membership</h3>
+          <p>Sign up for a free account to save your details for faster booking, and get 15% off your first session with code <span class="membership-code">SOLARMEMBER15</span>.</p>
+        </div>
+        <button class="btn btn-gold" id="openSignUpBanner">Sign Up &amp; Save 15%</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="section" id="book">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Book a Session</span>
+        <h2>Reserve your spot</h2>
+        <p>Choose your service, pick a date and time, tell me a bit about yourself, then confirm with payment.</p>
+      </div>
+
+      <div class="booking-shell">
+        <div class="steps-bar" id="stepsBar">
+          <div class="step-pill active" data-step="1"><span class="num">1</span><span class="lbl">Service</span></div>
+          <div class="step-pill" data-step="2"><span class="num">2</span><span class="lbl">Date &amp; Time</span></div>
+          <div class="step-pill" data-step="3"><span class="num">3</span><span class="lbl">Your Info</span></div>
+          <div class="step-pill" data-step="4"><span class="num">4</span><span class="lbl">Payment</span></div>
+          <div class="step-pill" data-step="5"><span class="num">5</span><span class="lbl">Confirmed</span></div>
+        </div>
+
+        <!-- STEP 1: SERVICE -->
+        <div class="step-panel active" data-step="1">
+          <h3>Choose a service</h3>
+          <p class="step-sub">Select the session that fits what you need.</p>
+          <div class="svc-choice-grid" id="svcChoiceGrid"></div>
+          <div class="wizard-nav">
+            <span></span>
+            <button class="btn btn-gold" id="toStep2" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: DATE & TIME -->
+        <div class="step-panel" data-step="2">
+          <h3>Pick a date &amp; time</h3>
+          <p class="step-sub">Times shown in your local timezone. Booked sessions block the following 2 hours automatically. Closed Mondays.</p>
+          <div class="cal-time-grid">
+            <div class="calendar">
+              <div class="cal-head">
+                <button class="cal-nav-btn" id="prevMonth" type="button">&#8249;</button>
+                <span class="month-lbl" id="monthLabel"></span>
+                <button class="cal-nav-btn" id="nextMonth" type="button">&#8250;</button>
+              </div>
+              <div class="cal-grid" id="calGrid"></div>
+              <div class="cal-legend">Gold = selected date · Faded = unavailable</div>
+            </div>
+            <div class="time-col">
+              <div class="time-head" id="timeHead">Select a date to see available times</div>
+              <div class="time-slots" id="timeSlots"></div>
+            </div>
+          </div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" data-back="1">Back</button>
+            <button class="btn btn-gold" id="toStep3" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: CUSTOMER INFO -->
+        <div class="step-panel" data-step="3">
+          <h3>Your information</h3>
+          <p class="step-sub">Signed in members can save this info for next time.</p>
+          <form id="customerForm">
+            <div class="form-grid">
+              <div class="field">
+                <label>First Name <span class="req">*</span></label>
+                <input type="text" id="custFirst" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label>Last Name <span class="req">*</span></label>
+                <input type="text" id="custLast" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" id="custEmail" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label>Phone Number <span class="req">*</span></label>
+                <input type="tel" id="custPhone" placeholder="(555) 555-5555" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field full">
+                <label>Preferred Contact Method <span class="req">*</span></label>
+                <div class="radio-row">
+                  <label class="radio-chip"><input type="radio" name="contactMethod" value="Email" checked> Email</label>
+                  <label class="radio-chip"><input type="radio" name="contactMethod" value="Phone Call"> Phone Call</label>
+                  <label class="radio-chip"><input type="radio" name="contactMethod" value="Text"> Text</label>
+                </div>
+              </div>
+              <div class="field">
+                <label>Gender</label>
+                <select id="custGender">
+                  <option value="">Prefer not to say</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Non-binary</option>
+                  <option value="self">Self-describe</option>
+                </select>
+              </div>
+              <div class="field" id="genderSelfField" style="display:none;">
+                <label>Self-described gender</label>
+                <input type="text" id="custGenderSelf">
+              </div>
+              <div class="field full">
+                <label>Anything I should know?</label>
+                <textarea id="custNotes" placeholder="Allergies, accessibility needs, vision for the shoot, references, etc."></textarea>
+              </div>
+            </div>
+          </form>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" data-back="2">Back</button>
+            <button class="btn btn-gold" id="toStep4">Continue</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: REVIEW & PAYMENT -->
+        <div class="step-panel" data-step="4">
+          <h3>Review &amp; pay</h3>
+          <p class="step-sub">Your card is only charged once you confirm below.</p>
+          <div class="review-box" id="reviewBox"></div>
+
+          <div class="promo-row">
+            <input type="text" id="promoInput" placeholder="Promo code (e.g. SOLARMEMBER15)">
+            <button class="btn btn-ghost btn-sm" id="applyPromoBtn" type="button">Apply</button>
+          </div>
+          <div class="promo-msg" id="promoMsg"></div>
+
+          <form id="paymentForm">
+            <div class="pay-card">
+              <div class="pay-secure">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                Secure payment · ready for Stripe / your payment processor of choice
+              </div>
+              <div class="form-grid">
+                <div class="field full">
+                  <label>Name on Card <span class="req">*</span></label>
+                  <input type="text" id="payName" required>
+                  <div class="error-text"></div>
+                </div>
+                <div class="field full">
+                  <label>Card Number <span class="req">*</span></label>
+                  <input type="text" id="payNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                  <div class="error-text"></div>
+                </div>
+                <div class="field">
+                  <label>Expiry (MM/YY) <span class="req">*</span></label>
+                  <input type="text" id="payExpiry" placeholder="MM/YY" maxlength="5" required>
+                  <div class="error-text"></div>
+                </div>
+                <div class="field">
+                  <label>CVC <span class="req">*</span></label>
+                  <input type="text" id="payCvc" placeholder="123" maxlength="4" required>
+                  <div class="error-text"></div>
+                </div>
+                <div class="field full">
+                  <label>Billing ZIP <span class="req">*</span></label>
+                  <input type="text" id="payZip" required>
+                  <div class="error-text"></div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" data-back="3">Back</button>
+            <button class="btn btn-gold" id="payBtn">Confirm &amp; Pay</button>
+          </div>
+        </div>
+
+        <!-- STEP 5: CONFIRMATION -->
+        <div class="step-panel" data-step="5">
+          <div class="confirm-wrap">
+            <div class="confirm-check">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5ac98a" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg>
+            </div>
+            <h3>You're booked!</h3>
+            <div class="confirm-id" id="confirmId"></div>
+            <div class="review-box confirm-summary" id="confirmSummary"></div>
+            <p class="step-sub" style="max-width:420px;margin:0 auto 24px;">A confirmation email will be sent to you. Reach out anytime if your plans change.</p>
+            <button class="btn btn-gold" id="bookAnotherBtn">Book Another Session</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-cols">
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:booking@solarmphotography.com">booking@solarmphotography.com</a></li>
+            <li><a href="#book">Book a session</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Studio</h4>
+          <ul>
+            <li>New York City</li>
+            <li>Seoul, South Korea</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">EnVi Media</a></li>
+            <li><a href="#">NABI Magazine</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> SolarM Photography. All rights reserved.</span>
+      <span>Designed for Miko Fusco</span>
+    </div>
+  </div>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="closeAuth" aria-label="Close">&times;</button>
+    <div class="modal-tabs">
+      <div class="modal-tab active" data-tab="signin">Sign In</div>
+      <div class="modal-tab" data-tab="signup">Sign Up</div>
+    </div>
+
+    <div class="modal-pane active" id="paneSignin">
+      <h3>Welcome back</h3>
+      <p class="modal-sub">Sign in to speed through your next booking.</p>
+      <form id="signInForm">
+        <div class="field" style="margin-bottom:14px;">
+          <label>Email</label>
+          <input type="email" id="siEmail" required>
+        </div>
+        <div class="field" style="margin-bottom:6px;">
+          <label>Password</label>
+          <input type="password" id="siPassword" required>
+        </div>
+        <div class="auth-msg" id="siMsg"></div>
+        <button class="btn btn-gold btn-block" type="submit" style="margin-top:10px;">Sign In</button>
+      </form>
+    </div>
+
+    <div class="modal-pane" id="paneSignup">
+      <h3>Create your account</h3>
+      <p class="modal-sub">Faster checkout, saved details, member pricing.</p>
+      <form id="signUpForm">
+        <div class="form-grid" style="margin-bottom:14px;">
+          <div class="field"><label>First Name</label><input type="text" id="suFirst" required></div>
+          <div class="field"><label>Last Name</label><input type="text" id="suLast" required></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;"><label>Email</label><input type="email" id="suEmail" required></div>
+        <div class="field" style="margin-bottom:14px;"><label>Password</label><input type="password" id="suPassword" required></div>
+        <label class="check-row" style="margin-bottom:6px;">
+          <input type="checkbox" id="suMember" checked>
+          <span>Join the free SolarM Membership and get code <strong>SOLARMEMBER15</strong> for 15% off my first booking.</span>
+        </label>
+        <div class="auth-msg" id="suMsg"></div>
+        <button class="btn btn-gold btn-block" type="submit" style="margin-top:10px;">Create Account</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ── DEMO-DATA NOTICE ─────────────────────────────────────────
+     This page is a self-contained front-end prototype. Accounts,
+     bookings, and payments are stored in the browser (localStorage)
+     for demo purposes only. Wire this up to a real backend before
+     going live: proper auth/password hashing, a database for
+     bookings, and a payment processor (e.g. Stripe) for the card
+     form below.
+  ------------------------------------------------------------- */
+
+  /* ── STAR FIELD ─────────────────────────────────────────── */
+  (function stars(){
+    var el = document.getElementById('stars');
+    var layer = document.createElement('div');
+    layer.className = 'layer';
+    var shadows = [];
+    for (var i = 0; i < 160; i++){
+      var x = Math.random()*100, y = Math.random()*400, r = Math.random() < 0.15 ? 2 : 1;
+      var o = (Math.random()*0.6 + 0.3).toFixed(2);
+      shadows.push(x+'vw '+y+'vh 0 rgba(255,255,255,'+o+')');
+    }
+    layer.style.width = r + 'px';
+    layer.style.height = r + 'px';
+    layer.style.borderRadius = '50%';
+    layer.style.boxShadow = shadows.join(',');
+    el.appendChild(layer);
+  })();
+
+  /* ── CONSTANTS ──────────────────────────────────────────── */
+  var SERVICES = [
+    { id:'headshot', name:'Headshot Standard', price:179, priceLabel:'$179', deposit:179,
+      desc:'One standard retouched headshot + raw image. No makeup or styling services.', duration:60 },
+    { id:'korean', name:'Korean Style Portraits', price:329, priceLabel:'$329', deposit:329,
+      desc:'Seoul-studio-inspired portrait session with a curated set of retouched images.', duration:90 },
+    { id:'editorial', name:'Editorial Shoots', price:500, priceLabel:'$500–$750', deposit:500,
+      desc:'Full editorial/campaign shoot. Final price scoped to concept & deliverables. $500 deposit due today.', duration:120 }
+  ];
+  var CLOSED_DAYS = [1]; // Monday closed
+  var DAY_START = 9, DAY_END = 17; // 9am - 5pm start times
+  var BLOCK_HOURS = 2; // hours blocked after a booked start time
+  var USERS_KEY = 'solarm_users';
+  var SESSION_KEY = 'solarm_session';
+  var BOOKINGS_KEY = 'solarm_bookings';
+  var MEMBER_CODE = 'SOLARMEMBER15';
+
+  /* ── STATE ──────────────────────────────────────────────── */
+  var state = {
+    step: 1,
+    service: null,
+    date: null,
+    time: null,
+    customer: {},
+    promoApplied: false,
+    calMonth: new Date().getMonth(),
+    calYear: new Date().getFullYear()
+  };
+
+  /* ── STORAGE HELPERS ────────────────────────────────────── */
+  function loadJSON(key, fallback){
+    try { var v = JSON.parse(localStorage.getItem(key)); return v || fallback; }
+    catch(e){ return fallback; }
+  }
+  function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+  function getUsers(){ return loadJSON(USERS_KEY, {}); }
+  function getBookings(){ return loadJSON(BOOKINGS_KEY, []); }
+  function getSession(){ return localStorage.getItem(SESSION_KEY); }
+  function currentUser(){
+    var email = getSession();
+    if (!email) return null;
+    return getUsers()[email] || null;
+  }
+
+  /* ── TOAST ──────────────────────────────────────────────── */
+  var toastEl = document.getElementById('toast');
+  var toastTimer;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 3200);
+  }
+
+  /* ── NAV / AUTH UI ──────────────────────────────────────── */
+  function updateAuthUI(){
+    var user = currentUser();
+    var out = document.getElementById('signedOutActions');
+    var inn = document.getElementById('signedInActions');
+    var mOut = document.getElementById('mobileSignedOutActions');
+    var mInn = document.getElementById('mobileSignedInActions');
+    if (user){
+      out.style.display = 'none';
+      inn.style.display = 'flex';
+      mOut.classList.add('is-hidden');
+      mInn.classList.remove('is-hidden');
+      document.getElementById('navUserName').textContent = user.firstName;
+      document.getElementById('navUserNameMobile').textContent = user.firstName;
+    } else {
+      out.style.display = 'flex';
+      inn.style.display = 'none';
+      mOut.classList.remove('is-hidden');
+      mInn.classList.add('is-hidden');
+    }
+  }
+
+  var authOverlay = document.getElementById('authOverlay');
+  function openAuth(tab){
+    authOverlay.classList.add('open');
+    switchAuthTab(tab || 'signin');
+  }
+  function closeAuth(){ authOverlay.classList.remove('open'); }
+  function switchAuthTab(tab){
+    document.querySelectorAll('.modal-tab').forEach(function(t){
+      t.classList.toggle('active', t.dataset.tab === tab);
+    });
+    document.getElementById('paneSignin').classList.toggle('active', tab === 'signin');
+    document.getElementById('paneSignup').classList.toggle('active', tab === 'signup');
+  }
+  document.getElementById('openSignIn').addEventListener('click', function(){ openAuth('signin'); });
+  document.getElementById('openSignUp').addEventListener('click', function(){ openAuth('signup'); });
+  document.getElementById('openSignUpBanner').addEventListener('click', function(){ openAuth('signup'); });
+  document.getElementById('openSignInMobile').addEventListener('click', function(){ document.getElementById('navLinks').classList.remove('mobile-open'); openAuth('signin'); });
+  document.getElementById('openSignUpMobile').addEventListener('click', function(){ document.getElementById('navLinks').classList.remove('mobile-open'); openAuth('signup'); });
+  document.getElementById('closeAuth').addEventListener('click', closeAuth);
+  authOverlay.addEventListener('click', function(e){ if (e.target === authOverlay) closeAuth(); });
+  document.querySelectorAll('.modal-tab').forEach(function(t){
+    t.addEventListener('click', function(){ switchAuthTab(t.dataset.tab); });
+  });
+
+  document.getElementById('signUpForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var first = document.getElementById('suFirst').value.trim();
+    var last = document.getElementById('suLast').value.trim();
+    var email = document.getElementById('suEmail').value.trim().toLowerCase();
+    var pass = document.getElementById('suPassword').value;
+    var member = document.getElementById('suMember').checked;
+    var msg = document.getElementById('suMsg');
+    if (!first || !last || !email || !pass){ msg.textContent = 'Please fill out all fields.'; msg.className='auth-msg err'; return; }
+    var users = getUsers();
+    if (users[email]){ msg.textContent = 'An account with that email already exists.'; msg.className='auth-msg err'; return; }
+    users[email] = { firstName:first, lastName:last, email:email, password:pass, member:member, phone:'' };
+    saveJSON(USERS_KEY, users);
+    localStorage.setItem(SESSION_KEY, email);
+    msg.textContent = 'Account created!'; msg.className='auth-msg ok';
+    updateAuthUI();
+    prefillCustomerFromUser();
+    closeAuth();
+    toast(member ? 'Welcome to SolarM Membership — code ' + MEMBER_CODE + ' is ready to use.' : 'Account created. Welcome!');
+    document.getElementById('signUpForm').reset();
+    document.getElementById('suMember').checked = true;
+  });
+
+  document.getElementById('signInForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('siEmail').value.trim().toLowerCase();
+    var pass = document.getElementById('siPassword').value;
+    var msg = document.getElementById('siMsg');
+    var users = getUsers();
+    var user = users[email];
+    if (!user || user.password !== pass){ msg.textContent = 'Incorrect email or password.'; msg.className='auth-msg err'; return; }
+    localStorage.setItem(SESSION_KEY, email);
+    msg.textContent = 'Signed in!'; msg.className='auth-msg ok';
+    updateAuthUI();
+    prefillCustomerFromUser();
+    closeAuth();
+    toast('Welcome back, ' + user.firstName + '.');
+    document.getElementById('signInForm').reset();
+  });
+
+  function signOut(){
+    localStorage.removeItem(SESSION_KEY);
+    updateAuthUI();
+    toast('Signed out.');
+  }
+  document.getElementById('signOutBtn').addEventListener('click', signOut);
+  document.getElementById('signOutBtnMobile').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.remove('mobile-open');
+    signOut();
+  });
+
+  function prefillCustomerFromUser(){
+    var user = currentUser();
+    if (!user) return;
+    document.getElementById('custFirst').value = user.firstName || '';
+    document.getElementById('custLast').value = user.lastName || '';
+    document.getElementById('custEmail').value = user.email || '';
+    document.getElementById('custPhone').value = user.phone || '';
+  }
+
+  /* ── MOBILE NAV ─────────────────────────────────────────── */
+  document.getElementById('hamburgerBtn').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.toggle('mobile-open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(function(a){
+    a.addEventListener('click', function(){ document.getElementById('navLinks').classList.remove('mobile-open'); });
+  });
+
+  /* ── STEP NAVIGATION ────────────────────────────────────── */
+  function goStep(n){
+    state.step = n;
+    document.querySelectorAll('.step-panel').forEach(function(p){
+      p.classList.toggle('active', +p.dataset.step === n);
+    });
+    document.querySelectorAll('.step-pill').forEach(function(p){
+      var s = +p.dataset.step;
+      p.classList.toggle('active', s === n);
+      p.classList.toggle('done', s < n);
+    });
+    document.querySelector('.booking-shell').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+  document.querySelectorAll('[data-back]').forEach(function(btn){
+    btn.addEventListener('click', function(){ goStep(+btn.dataset.back); });
+  });
+
+  /* ── STEP 1: SERVICE CHOICE ─────────────────────────────── */
+  var svcGrid = document.getElementById('svcChoiceGrid');
+  SERVICES.forEach(function(svc){
+    var div = document.createElement('div');
+    div.className = 'svc-choice';
+    div.dataset.id = svc.id;
+    div.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+        '<strong>' + svc.name + '</strong><span class="radio-dot"></span>' +
+      '</div>' +
+      '<div class="price">' + svc.priceLabel + '</div>' +
+      '<div class="desc">' + svc.desc + '</div>';
+    div.addEventListener('click', function(){
+      state.service = svc;
+      document.querySelectorAll('.svc-choice').forEach(function(c){ c.classList.remove('selected'); });
+      div.classList.add('selected');
+      document.getElementById('toStep2').disabled = false;
+    });
+    svcGrid.appendChild(div);
+  });
+  document.getElementById('toStep2').addEventListener('click', function(){
+    renderCalendar();
+    goStep(2);
+  });
+
+  /* ── STEP 2: CALENDAR + TIME SLOTS ──────────────────────── */
+  var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var DOW = ['S','M','T','W','T','F','S'];
+
+  function pad(n){ return n < 10 ? '0'+n : ''+n; }
+  function dateKey(y,m,d){ return y + '-' + pad(m+1) + '-' + pad(d); }
+  function todayKey(){ var t = new Date(); return dateKey(t.getFullYear(), t.getMonth(), t.getDate()); }
+
+  function renderCalendar(){
+    var y = state.calYear, m = state.calMonth;
+    document.getElementById('monthLabel').textContent = MONTH_NAMES[m] + ' ' + y;
+    var grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    DOW.forEach(function(d){
+      var el = document.createElement('div');
+      el.className = 'dow'; el.textContent = d;
+      grid.appendChild(el);
+    });
+    var firstDow = new Date(y, m, 1).getDay();
+    var daysInMonth = new Date(y, m+1, 0).getDate();
+    var tKey = todayKey();
+
+    for (var i = 0; i < firstDow; i++){
+      var blank = document.createElement('div');
+      blank.className = 'cal-day blank';
+      grid.appendChild(blank);
+    }
+    for (var d = 1; d <= daysInMonth; d++){
+      var key = dateKey(y, m, d);
+      var dow = new Date(y, m, d).getDay();
+      var cell = document.createElement('div');
+      cell.className = 'cal-day';
+      cell.textContent = d;
+      var isPast = key < tKey;
+      var isClosed = CLOSED_DAYS.indexOf(dow) !== -1;
+      if (key === tKey) cell.classList.add('today');
+      if (isPast || isClosed){
+        cell.classList.add('disabled');
+      } else {
+        cell.classList.add('selectable');
+        cell.addEventListener('click', function(k){
+          return function(){ selectDate(k); };
+        }(key));
+      }
+      if (state.date === key) cell.classList.add('selected');
+      grid.appendChild(cell);
+    }
+  }
+
+  document.getElementById('prevMonth').addEventListener('click', function(){
+    state.calMonth--; if (state.calMonth < 0){ state.calMonth = 11; state.calYear--; }
+    renderCalendar();
+  });
+  document.getElementById('nextMonth').addEventListener('click', function(){
+    state.calMonth++; if (state.calMonth > 11){ state.calMonth = 0; state.calYear++; }
+    renderCalendar();
+  });
+
+  function selectDate(key){
+    state.date = key;
+    state.time = null;
+    document.getElementById('toStep3').disabled = true;
+    renderCalendar();
+    renderTimeSlots(key);
+  }
+
+  function fmtHour(h){
+    var period = h >= 12 ? 'PM' : 'AM';
+    var hh = h % 12; if (hh === 0) hh = 12;
+    return hh + ':00 ' + period;
+  }
+
+  function renderTimeSlots(key){
+    var col = document.getElementById('timeSlots');
+    var head = document.getElementById('timeHead');
+    var d = new Date(key + 'T00:00:00');
+    head.textContent = MONTH_NAMES[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    col.innerHTML = '';
+
+    var bookings = getBookings().filter(function(b){ return b.date === key; });
+    var blockedHours = [];
+    bookings.forEach(function(b){
+      for (var h = b.hour; h < b.hour + BLOCK_HOURS; h++) blockedHours.push(h);
+    });
+
+    var any = false;
+    for (var h = DAY_START; h <= DAY_END; h++){
+      any = true;
+      var slot = document.createElement('div');
+      var isBlocked = blockedHours.indexOf(h) !== -1;
+      slot.className = 'time-slot ' + (isBlocked ? 'blocked' : 'selectable');
+      slot.textContent = fmtHour(h);
+      if (state.time === h && !isBlocked) slot.classList.add('selected');
+      if (!isBlocked){
+        slot.addEventListener('click', function(hour){
+          return function(){
+            state.time = hour;
+            renderTimeSlots(key);
+            document.getElementById('toStep3').disabled = false;
+          };
+        }(h));
+      }
+      col.appendChild(slot);
+    }
+    if (!any){
+      col.innerHTML = '<div class="time-empty">No times available.</div>';
+    }
+  }
+
+  document.getElementById('toStep3').addEventListener('click', function(){
+    prefillCustomerFromUser();
+    goStep(3);
+  });
+
+  /* ── STEP 3: CUSTOMER INFO ──────────────────────────────── */
+  document.getElementById('custGender').addEventListener('change', function(){
+    document.getElementById('genderSelfField').style.display = this.value === 'self' ? 'flex' : 'none';
+  });
+
+  function fieldError(input, msg){
+    input.classList.toggle('field-error', !!msg);
+    var errEl = input.parentElement.querySelector('.error-text');
+    if (errEl) errEl.textContent = msg || '';
+  }
+
+  document.getElementById('toStep4').addEventListener('click', function(){
+    var first = document.getElementById('custFirst');
+    var last = document.getElementById('custLast');
+    var email = document.getElementById('custEmail');
+    var phone = document.getElementById('custPhone');
+    var valid = true;
+
+    fieldError(first, first.value.trim() ? '' : 'Required');
+    fieldError(last, last.value.trim() ? '' : 'Required');
+    fieldError(email, /^\S+@\S+\.\S+$/.test(email.value.trim()) ? '' : 'Valid email required');
+    fieldError(phone, phone.value.trim().length >= 7 ? '' : 'Valid phone required');
+    [first,last,email,phone].forEach(function(f){ if (f.classList.contains('field-error')) valid = false; });
+    if (!valid) return;
+
+    var genderSel = document.getElementById('custGender').value;
+    var gender = genderSel === 'self' ? (document.getElementById('custGenderSelf').value.trim() || 'Self-described') : genderSel;
+
+    state.customer = {
+      firstName: first.value.trim(),
+      lastName: last.value.trim(),
+      email: email.value.trim(),
+      phone: phone.value.trim(),
+      contactMethod: document.querySelector('input[name=contactMethod]:checked').value,
+      gender: gender,
+      notes: document.getElementById('custNotes').value.trim()
+    };
+    renderReview();
+    goStep(4);
+  });
+
+  /* ── STEP 4: REVIEW + PROMO + PAYMENT ───────────────────── */
+  function currentTotal(){
+    var base = state.service.deposit;
+    var discount = state.promoApplied ? Math.round(base * 0.15 * 100) / 100 : 0;
+    return { base: base, discount: discount, total: Math.round((base - discount) * 100) / 100 };
+  }
+
+  function renderReview(){
+    var d = new Date(state.date + 'T00:00:00');
+    var dateStr = MONTH_NAMES[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    var totals = currentTotal();
+    var isEditorial = state.service.id === 'editorial';
+    var box = document.getElementById('reviewBox');
+    box.innerHTML =
+      row('Service', state.service.name) +
+      row('Date', dateStr) +
+      row('Time', fmtHour(state.time)) +
+      row('Name', state.customer.firstName + ' ' + state.customer.lastName) +
+      row('Contact', state.customer.email + ' · ' + state.customer.phone) +
+      row('Preferred contact', state.customer.contactMethod) +
+      (isEditorial ? row(state.service.priceLabel + ' — deposit today', '$' + totals.base.toFixed(2)) : row('Price', '$' + totals.base.toFixed(2))) +
+      (totals.discount > 0 ? row('Membership discount (15%)', '-$' + totals.discount.toFixed(2)) : '') +
+      rowTotal('Total due today', '$' + totals.total.toFixed(2));
+    function row(k,v){ return '<div class="review-row"><span class="k">'+k+'</span><span>'+v+'</span></div>'; }
+    function rowTotal(k,v){ return '<div class="review-row total"><span class="k">'+k+'</span><span>'+v+'</span></div>'; }
+  }
+
+  document.getElementById('applyPromoBtn').addEventListener('click', function(){
+    var code = document.getElementById('promoInput').value.trim().toUpperCase();
+    var msg = document.getElementById('promoMsg');
+    if (code === MEMBER_CODE){
+      state.promoApplied = true;
+      msg.textContent = '15% membership discount applied.';
+      msg.className = 'promo-msg ok';
+    } else {
+      state.promoApplied = false;
+      msg.textContent = 'That code is not valid.';
+      msg.className = 'promo-msg err';
+    }
+    renderReview();
+  });
+
+  var payNumber = document.getElementById('payNumber');
+  payNumber.addEventListener('input', function(){
+    var digits = this.value.replace(/\D/g,'').slice(0,16);
+    this.value = digits.replace(/(.{4})/g,'$1 ').trim();
+  });
+  var payExpiry = document.getElementById('payExpiry');
+  payExpiry.addEventListener('input', function(){
+    var digits = this.value.replace(/\D/g,'').slice(0,4);
+    this.value = digits.length > 2 ? digits.slice(0,2) + '/' + digits.slice(2) : digits;
+  });
+  var payCvc = document.getElementById('payCvc');
+  payCvc.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,'').slice(0,4); });
+
+  document.getElementById('payBtn').addEventListener('click', function(){
+    var name = document.getElementById('payName');
+    var number = document.getElementById('payNumber');
+    var expiry = document.getElementById('payExpiry');
+    var cvc = document.getElementById('payCvc');
+    var zip = document.getElementById('payZip');
+    var valid = true;
+
+    fieldError(name, name.value.trim() ? '' : 'Required');
+    fieldError(number, number.value.replace(/\s/g,'').length >= 15 ? '' : 'Enter a valid card number');
+    fieldError(expiry, /^\d{2}\/\d{2}$/.test(expiry.value) ? '' : 'MM/YY');
+    fieldError(cvc, cvc.value.length >= 3 ? '' : 'Invalid');
+    fieldError(zip, zip.value.trim() ? '' : 'Required');
+    [name,number,expiry,cvc,zip].forEach(function(f){ if (f.classList.contains('field-error')) valid = false; });
+    if (!valid) return;
+
+    var payBtn = document.getElementById('payBtn');
+    payBtn.disabled = true;
+    payBtn.textContent = 'Processing…';
+
+    // Simulated payment processing delay — swap for a real payment gateway call.
+    setTimeout(function(){
+      finalizeBooking();
+      payBtn.disabled = false;
+      payBtn.textContent = 'Confirm & Pay';
+    }, 900);
+  });
+
+  function genConfirmationId(){
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var id = 'SM-';
+    for (var i=0;i<6;i++) id += chars[Math.floor(Math.random()*chars.length)];
+    return id;
+  }
+
+  function finalizeBooking(){
+    var bookings = getBookings();
+    var confirmId = genConfirmationId();
+    var totals = currentTotal();
+    bookings.push({
+      id: confirmId,
+      date: state.date,
+      hour: state.time,
+      service: state.service.name,
+      total: totals.total,
+      customer: state.customer
+    });
+    saveJSON(BOOKINGS_KEY, bookings);
+
+    var d = new Date(state.date + 'T00:00:00');
+    var dateStr = MONTH_NAMES[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+
+    document.getElementById('confirmId').textContent = 'Confirmation #' + confirmId;
+    document.getElementById('confirmSummary').innerHTML =
+      '<div class="review-row"><span class="k">Service</span><span>' + state.service.name + '</span></div>' +
+      '<div class="review-row"><span class="k">Date</span><span>' + dateStr + '</span></div>' +
+      '<div class="review-row"><span class="k">Time</span><span>' + fmtHour(state.time) + '</span></div>' +
+      '<div class="review-row total"><span class="k">Paid</span><span>$' + totals.total.toFixed(2) + '</span></div>';
+
+    goStep(5);
+  }
+
+  document.getElementById('bookAnotherBtn').addEventListener('click', function(){
+    state.service = null; state.date = null; state.time = null; state.promoApplied = false;
+    document.querySelectorAll('.svc-choice').forEach(function(c){ c.classList.remove('selected'); });
+    document.getElementById('toStep2').disabled = true;
+    document.getElementById('toStep3').disabled = true;
+    document.getElementById('customerForm').reset();
+    document.getElementById('paymentForm').reset();
+    document.getElementById('promoInput').value = '';
+    document.getElementById('promoMsg').textContent = '';
+    goStep(1);
+  });
+
+  /* ── INIT ───────────────────────────────────────────────── */
+  document.getElementById('year').textContent = new Date().getFullYear();
+  updateAuthUI();
+})();
+</script>
+</body>
+</html>
