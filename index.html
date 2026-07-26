@@ -244,7 +244,11 @@
   .review-row .k{color:var(--muted);}
   .review-row.total{font-weight:700;font-size:1.05rem;color:var(--gold-bright);}
   .promo-row{display:flex;gap:10px;margin:18px 0;}
-  .promo-row input{flex:1;}
+  .promo-row input{
+    flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:9px;
+    padding:12px 14px;color:var(--white);outline:none;transition:border-color .15s ease;
+  }
+  .promo-row input:focus{border-color:var(--gold);}
   .promo-msg{font-size:0.82rem;margin-top:6px;}
   .promo-msg.ok{color:var(--success);}
   .promo-msg.err{color:var(--danger);}
@@ -334,8 +338,6 @@
     .step-pill .lbl{display:none;}
     .booking-shell{padding:24px;}
     .membership-banner{flex-direction:column;align-items:flex-start;}
-  }
-  @media (max-width:900px){
     nav.links.mobile-open{
       display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;
       background:var(--navy-deep);border-bottom:1px solid var(--line);padding:20px 28px;gap:16px;
@@ -453,7 +455,7 @@
       <div class="membership-banner">
         <div>
           <h3>Join the SolarM Membership</h3>
-          <p>Sign up for a free account to save your details for faster booking, and get 15% off your first session with code <span class="membership-code">SOLARMEMBER15</span>.</p>
+          <p>Sign up for a free account to save your details for faster booking, and unlock <span class="membership-code">15% off</span> your first session.</p>
         </div>
         <button class="btn btn-gold" id="openSignUpBanner">Sign Up &amp; Save 15%</button>
       </div>
@@ -522,22 +524,22 @@
             <div class="form-grid">
               <div class="field">
                 <label>First Name <span class="req">*</span></label>
-                <input type="text" id="custFirst" required>
+                <input type="text" id="custFirst" autocomplete="given-name" required>
                 <div class="error-text"></div>
               </div>
               <div class="field">
                 <label>Last Name <span class="req">*</span></label>
-                <input type="text" id="custLast" required>
+                <input type="text" id="custLast" autocomplete="family-name" required>
                 <div class="error-text"></div>
               </div>
               <div class="field">
                 <label>Email <span class="req">*</span></label>
-                <input type="email" id="custEmail" required>
+                <input type="email" id="custEmail" autocomplete="email" required>
                 <div class="error-text"></div>
               </div>
               <div class="field">
                 <label>Phone Number <span class="req">*</span></label>
-                <input type="tel" id="custPhone" placeholder="(555) 555-5555" required>
+                <input type="tel" id="custPhone" placeholder="(555) 555-5555" autocomplete="tel" required>
                 <div class="error-text"></div>
               </div>
               <div class="field full">
@@ -581,7 +583,7 @@
           <div class="review-box" id="reviewBox"></div>
 
           <div class="promo-row">
-            <input type="text" id="promoInput" placeholder="Promo code (e.g. SOLARMEMBER15)">
+            <input type="text" id="promoInput" placeholder="Promo code" autocomplete="off">
             <button class="btn btn-ghost btn-sm" id="applyPromoBtn" type="button">Apply</button>
           </div>
           <div class="promo-msg" id="promoMsg"></div>
@@ -595,27 +597,27 @@
               <div class="form-grid">
                 <div class="field full">
                   <label>Name on Card <span class="req">*</span></label>
-                  <input type="text" id="payName" required>
+                  <input type="text" id="payName" autocomplete="cc-name" required>
                   <div class="error-text"></div>
                 </div>
                 <div class="field full">
                   <label>Card Number <span class="req">*</span></label>
-                  <input type="text" id="payNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                  <input type="text" id="payNumber" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number" inputmode="numeric" required>
                   <div class="error-text"></div>
                 </div>
                 <div class="field">
                   <label>Expiry (MM/YY) <span class="req">*</span></label>
-                  <input type="text" id="payExpiry" placeholder="MM/YY" maxlength="5" required>
+                  <input type="text" id="payExpiry" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp" inputmode="numeric" required>
                   <div class="error-text"></div>
                 </div>
                 <div class="field">
                   <label>CVC <span class="req">*</span></label>
-                  <input type="text" id="payCvc" placeholder="123" maxlength="4" required>
+                  <input type="text" id="payCvc" placeholder="123" maxlength="4" autocomplete="cc-csc" inputmode="numeric" required>
                   <div class="error-text"></div>
                 </div>
                 <div class="field full">
                   <label>Billing ZIP <span class="req">*</span></label>
-                  <input type="text" id="payZip" required>
+                  <input type="text" id="payZip" autocomplete="postal-code" inputmode="numeric" required>
                   <div class="error-text"></div>
                 </div>
               </div>
@@ -695,11 +697,11 @@
       <form id="signInForm">
         <div class="field" style="margin-bottom:14px;">
           <label>Email</label>
-          <input type="email" id="siEmail" required>
+          <input type="email" id="siEmail" autocomplete="email" required>
         </div>
         <div class="field" style="margin-bottom:6px;">
           <label>Password</label>
-          <input type="password" id="siPassword" required>
+          <input type="password" id="siPassword" autocomplete="current-password" required>
         </div>
         <div class="auth-msg" id="siMsg"></div>
         <button class="btn btn-gold btn-block" type="submit" style="margin-top:10px;">Sign In</button>
@@ -711,11 +713,11 @@
       <p class="modal-sub">Faster checkout, saved details, member pricing.</p>
       <form id="signUpForm">
         <div class="form-grid" style="margin-bottom:14px;">
-          <div class="field"><label>First Name</label><input type="text" id="suFirst" required></div>
-          <div class="field"><label>Last Name</label><input type="text" id="suLast" required></div>
+          <div class="field"><label>First Name</label><input type="text" id="suFirst" autocomplete="given-name" required></div>
+          <div class="field"><label>Last Name</label><input type="text" id="suLast" autocomplete="family-name" required></div>
         </div>
-        <div class="field" style="margin-bottom:14px;"><label>Email</label><input type="email" id="suEmail" required></div>
-        <div class="field" style="margin-bottom:14px;"><label>Password</label><input type="password" id="suPassword" required></div>
+        <div class="field" style="margin-bottom:14px;"><label>Email</label><input type="email" id="suEmail" autocomplete="email" required></div>
+        <div class="field" style="margin-bottom:14px;"><label>Password</label><input type="password" id="suPassword" autocomplete="new-password" required></div>
         <label class="check-row" style="margin-bottom:6px;">
           <input type="checkbox" id="suMember" checked>
           <span>Join the free SolarM Membership and get code <strong>SOLARMEMBER15</strong> for 15% off my first booking.</span>
@@ -749,12 +751,12 @@
     layer.className = 'layer';
     var shadows = [];
     for (var i = 0; i < 160; i++){
-      var x = Math.random()*100, y = Math.random()*400, r = Math.random() < 0.15 ? 2 : 1;
+      var x = Math.random()*100, y = Math.random()*100, spread = Math.random() < 0.15 ? 1 : 0;
       var o = (Math.random()*0.6 + 0.3).toFixed(2);
-      shadows.push(x+'vw '+y+'vh 0 rgba(255,255,255,'+o+')');
+      shadows.push(x+'vw '+y+'vh 0 '+spread+'px rgba(255,255,255,'+o+')');
     }
-    layer.style.width = r + 'px';
-    layer.style.height = r + 'px';
+    layer.style.width = '1px';
+    layer.style.height = '1px';
     layer.style.borderRadius = '50%';
     layer.style.boxShadow = shadows.join(',');
     el.appendChild(layer);
