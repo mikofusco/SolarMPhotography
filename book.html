@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book an Appointment — SolarM Photography</title>
+<meta name="description" content="Book your headshot, Korean-style portrait, or editorial session with SolarM Photography.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="stars"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="eclipse-mark"></span>SolarM Photography</a>
+    <nav class="links" id="navLinks">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="book.html">Book Now</a>
+      <a href="index.html#contact">Contact</a>
+      <div class="mobile-auth" id="mobileSignedOutActions">
+        <button class="btn btn-ghost btn-sm btn-block" id="openSignInMobile">Sign In</button>
+        <button class="btn btn-gold btn-sm btn-block" id="openSignUpMobile">Sign Up</button>
+      </div>
+      <div class="mobile-auth nav-user is-hidden" id="mobileSignedInActions">
+        <span>Hi, <strong id="navUserNameMobile"></strong></span>
+        <a class="btn btn-ghost btn-sm btn-block" href="my-bookings.html">My Bookings</a>
+        <a class="btn btn-ghost btn-sm btn-block" href="profile.html">Profile</a>
+        <button class="btn btn-ghost btn-sm btn-block" id="signOutBtnMobile">Sign Out</button>
+      </div>
+    </nav>
+    <div class="nav-actions">
+      <div id="signedOutActions" class="nav-actions desktop-auth">
+        <button class="btn btn-ghost btn-sm" id="openSignIn">Sign In</button>
+        <button class="btn btn-gold btn-sm" id="openSignUp">Sign Up</button>
+      </div>
+      <div id="signedInActions" class="nav-user desktop-auth account-menu" style="display:none;">
+        <button class="account-trigger" id="accountTrigger" type="button">
+          <span class="nav-avatar" id="navAvatar"></span>
+          Hi, <strong id="navUserName"></strong>
+          <svg class="chev" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </button>
+        <div class="account-dropdown" id="accountDropdown">
+          <a href="my-bookings.html">My Bookings</a>
+          <a href="profile.html">Profile</a>
+          <button type="button" id="signOutBtn">Sign Out</button>
+        </div>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Book a Session</span>
+      <h1>Reserve your spot</h1>
+      <p>Choose your service, pick a date and time, tell me a bit about yourself, then confirm with payment.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:30px;">
+    <div class="wrap">
+      <div class="booking-shell">
+        <div class="steps-bar" id="stepsBar">
+          <div class="step-pill active" data-step="1"><span class="num">1</span><span class="lbl">Service</span></div>
+          <div class="step-pill" data-step="2"><span class="num">2</span><span class="lbl">Date &amp; Time</span></div>
+          <div class="step-pill" data-step="3"><span class="num">3</span><span class="lbl">Your Info</span></div>
+          <div class="step-pill" data-step="4"><span class="num">4</span><span class="lbl">Payment</span></div>
+          <div class="step-pill" data-step="5"><span class="num">5</span><span class="lbl">Confirmed</span></div>
+        </div>
+
+        <!-- STEP 1: SERVICE -->
+        <div class="step-panel active" data-step="1">
+          <h3>Choose a service</h3>
+          <p class="step-sub">Select the session that fits what you need.</p>
+          <div class="svc-choice-grid" id="svcChoiceGrid"></div>
+          <div class="wizard-nav">
+            <span></span>
+            <button class="btn btn-gold" id="toStep2" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: DATE & TIME -->
+        <div class="step-panel" data-step="2">
+          <h3>Pick a date &amp; time</h3>
+          <p class="step-sub">Times shown in your local timezone. Booked sessions block the following 2 hours automatically. Closed Mondays.</p>
+          <div class="cal-time-grid">
+            <div class="calendar">
+              <div class="cal-head">
+                <button class="cal-nav-btn" id="prevMonth" type="button">&#8249;</button>
+                <span class="month-lbl" id="monthLabel"></span>
+                <button class="cal-nav-btn" id="nextMonth" type="button">&#8250;</button>
+              </div>
+              <div class="cal-grid" id="calGrid"></div>
+              <div class="cal-legend">Gold = selected date · Faded = unavailable</div>
+            </div>
+            <div class="time-col">
+              <div class="time-head" id="timeHead">Select a date to see available times</div>
+              <div class="time-slots" id="timeSlots"></div>
+            </div>
+          </div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" data-back="1">Back</button>
+            <button class="btn btn-gold" id="toStep3" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: CUSTOMER INFO -->
+        <div class="step-panel" data-step="3">
+          <h3>Your information</h3>
+          <p class="step-sub">Signed in members can save this info for next time.</p>
+          <form id="customerForm">
+            <div class="form-grid">
+              <div class="field">
+                <label>First Name <span class="req">*</span></label>
+                <input type="text" id="custFirst" autocomplete="given-name" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label>Last Name <span class="req">*</span></label>
+                <input type="text" id="custLast" autocomplete="family-name" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" id="custEmail" autocomplete="email" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label>Phone Number <span class="req">*</span></label>
+                <input type="tel" id="custPhone" placeholder="(555) 555-5555" autocomplete="tel" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field full">
+                <label>Preferred Contact Method <span class="req">*</span></label>
+                <div class="radio-row">
+                  <label class="radio-chip"><input type="radio" name="contactMethod" value="Email" checked> Email</label>
+                  <label class="radio-chip"><input type="radio" name="contactMethod" value="Phone Call"> Phone Call</label>
+                  <label class="radio-chip"><input type="radio" name="contactMethod" value="Text"> Text</label>
+                </div>
+              </div>
+              <div class="field">
+                <label>Gender</label>
+                <select id="custGender">
+                  <option value="">Prefer not to say</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Non-binary</option>
+                  <option value="self">Self-describe</option>
+                </select>
+              </div>
+              <div class="field" id="genderSelfField" style="display:none;">
+                <label>Self-described gender</label>
+                <input type="text" id="custGenderSelf">
+              </div>
+              <div class="field full">
+                <label>Anything I should know?</label>
+                <textarea id="custNotes" placeholder="Allergies, accessibility needs, vision for the shoot, references, etc."></textarea>
+              </div>
+            </div>
+          </form>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" data-back="2">Back</button>
+            <button class="btn btn-gold" id="toStep4">Continue</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: REVIEW & PAYMENT -->
+        <div class="step-panel" data-step="4">
+          <h3>Review &amp; pay</h3>
+          <p class="step-sub">Your card is only charged once you confirm below.</p>
+          <div class="review-box" id="reviewBox"></div>
+
+          <div class="promo-row">
+            <input type="text" id="promoInput" placeholder="Promo code" autocomplete="off">
+            <button class="btn btn-ghost btn-sm" id="applyPromoBtn" type="button">Apply</button>
+          </div>
+          <div class="promo-msg" id="promoMsg"></div>
+
+          <div class="pay-card">
+            <div class="pay-secure">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              Secure payment powered by Stripe
+            </div>
+            <div class="stripe-wrap">
+              <div id="payment-element">Loading payment form…</div>
+            </div>
+            <div class="pay-message" id="paymentMessage"></div>
+          </div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" data-back="3">Back</button>
+            <button class="btn btn-gold" id="payBtn" disabled>Confirm &amp; Pay</button>
+          </div>
+        </div>
+
+        <!-- STEP 5: CONFIRMATION -->
+        <div class="step-panel" data-step="5">
+          <div class="confirm-wrap">
+            <div class="confirm-check">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5ac98a" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg>
+            </div>
+            <h3>You're booked!</h3>
+            <div class="confirm-id" id="confirmId"></div>
+            <div class="review-box confirm-summary" id="confirmSummary"></div>
+            <p class="step-sub" style="max-width:420px;margin:0 auto 24px;">A confirmation email will be sent to you. Reach out anytime if your plans change.</p>
+            <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+              <button class="btn btn-gold" id="bookAnotherBtn">Book Another Session</button>
+              <a class="btn btn-ghost" href="my-bookings.html">View My Bookings</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-cols">
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:booking@solarmphotography.com">booking@solarmphotography.com</a></li>
+            <li><a href="book.html">Book a session</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Studio</h4>
+          <ul>
+            <li>New York City</li>
+            <li>Seoul, South Korea</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">EnVi Media</a></li>
+            <li><a href="#">NABI Magazine</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> SolarM Photography. All rights reserved.</span>
+      <span>Designed for Miko Fusco</span>
+    </div>
+  </div>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="closeAuth" aria-label="Close">&times;</button>
+    <div class="modal-tabs">
+      <div class="modal-tab active" data-tab="signin">Sign In</div>
+      <div class="modal-tab" data-tab="signup">Sign Up</div>
+    </div>
+
+    <div class="modal-pane active" id="paneSignin">
+      <h3>Welcome back</h3>
+      <p class="modal-sub">Sign in to speed through your next booking.</p>
+      <form id="signInForm">
+        <div class="field" style="margin-bottom:14px;">
+          <label>Email</label>
+          <input type="email" id="siEmail" autocomplete="email" required>
+        </div>
+        <div class="field" style="margin-bottom:6px;">
+          <label>Password</label>
+          <input type="password" id="siPassword" autocomplete="current-password" required>
+        </div>
+        <div class="auth-msg" id="siMsg"></div>
+        <button class="btn btn-gold btn-block" type="submit" style="margin-top:10px;">Sign In</button>
+      </form>
+    </div>
+
+    <div class="modal-pane" id="paneSignup">
+      <h3>Create your account</h3>
+      <p class="modal-sub">Faster checkout, saved details, member pricing.</p>
+      <form id="signUpForm">
+        <div class="form-grid" style="margin-bottom:14px;">
+          <div class="field"><label>First Name</label><input type="text" id="suFirst" autocomplete="given-name" required></div>
+          <div class="field"><label>Last Name</label><input type="text" id="suLast" autocomplete="family-name" required></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;"><label>Email</label><input type="email" id="suEmail" autocomplete="email" required></div>
+        <div class="field" style="margin-bottom:14px;"><label>Password</label><input type="password" id="suPassword" autocomplete="new-password" required></div>
+        <label class="check-row" style="margin-bottom:6px;">
+          <input type="checkbox" id="suMember" checked>
+          <span>Join the free SolarM Membership and get <strong>15% off</strong> my first booking — the code will be emailed to me.</span>
+        </label>
+        <div class="auth-msg" id="suMsg"></div>
+        <button class="btn btn-gold btn-block" type="submit" style="margin-top:10px;">Create Account</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/app.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="assets/book.js"></script>
+</body>
+</html>

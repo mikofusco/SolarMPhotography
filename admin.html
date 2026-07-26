@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — SolarM Photography</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="stars"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="eclipse-mark"></span>SolarM Photography</a>
+    <span style="color:var(--muted);font-size:0.85rem;">Admin</span>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Admin Only</span>
+      <h1>Bookings</h1>
+      <p>Every session booked through the site — this is how you (Miko) see what customers submit.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="wrap">
+
+      <div class="admin-gate" id="adminGate">
+        <h3>Enter admin key</h3>
+        <p style="color:var(--muted);margin-bottom:18px;">This is the <code>ADMIN_KEY</code> value set in the backend's <code>.env</code> file. See SETUP.md.</p>
+        <div class="field" style="margin-bottom:14px;text-align:left;">
+          <input type="password" id="adminKeyInput" placeholder="Admin key" autocomplete="off">
+        </div>
+        <button class="btn btn-gold btn-block" id="adminLoadBtn">View Bookings</button>
+        <div class="auth-msg" id="adminMsg"></div>
+      </div>
+
+      <div id="adminTableWrap" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+          <div style="color:var(--muted);font-size:0.9rem;" id="adminCount"></div>
+          <button class="btn btn-ghost btn-sm" id="adminRefreshBtn" type="button">Refresh</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Confirmation</th><th>Service</th><th>Date</th><th>Time</th>
+                <th>Customer</th><th>Email</th><th>Phone</th><th>Contact Pref.</th>
+                <th>Gender</th><th>Notes</th><th>Total</th><th>Booked At</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/admin.js"></script>
+</body>
+</html>
