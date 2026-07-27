@@ -68,4 +68,19 @@ async function sendBookingNotification({ booking }){
   return result.data;
 }
 
-module.exports = { sendMembershipEmail, sendBookingNotification };
+async function addMarketingContact({ email, firstName, lastName }){
+  if (!resend) throw new Error('RESEND_API_KEY is not set — see SETUP.md');
+  const audienceId = unquote(process.env.RESEND_AUDIENCE_ID);
+  if (!audienceId) throw new Error('RESEND_AUDIENCE_ID is not set — see SETUP.md');
+  const result = await resend.contacts.create({
+    audienceId,
+    email,
+    firstName,
+    lastName,
+    unsubscribed: false
+  });
+  if (result.error) throw new Error(result.error.message || 'Resend rejected the contact.');
+  return result.data;
+}
+
+module.exports = { sendMembershipEmail, sendBookingNotification, addMarketingContact };

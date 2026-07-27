@@ -158,6 +158,18 @@ window.SolarM = (function(){
     });
   }
 
+  function subscribeToMarketing(user){
+    fetch(window.SOLARM_CONFIG.API_BASE + '/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: user.email, firstName: user.firstName, lastName: user.lastName })
+    }).catch(function(){
+      // Non-fatal: the account is created either way. See SETUP.md if this
+      // never adds the contact (RESEND_AUDIENCE_ID not configured yet).
+      console.warn('Could not reach the mailing-list service — is RESEND_AUDIENCE_ID set? See SETUP.md.');
+    });
+  }
+
   function wireNav(){
     on('hamburgerBtn', 'click', function(){
       document.getElementById('navLinks').classList.toggle('mobile-open');
@@ -196,16 +208,20 @@ window.SolarM = (function(){
       var email = document.getElementById('suEmail').value.trim().toLowerCase();
       var pass = document.getElementById('suPassword').value;
       var member = document.getElementById('suMember').checked;
+      var marketing = document.getElementById('suMarketing').checked;
+      var termsAccepted = document.getElementById('suTerms').checked;
       var msg = document.getElementById('suMsg');
       if (!first || !last || !email || !pass){ msg.textContent = 'Please fill out all fields.'; msg.className='auth-msg err'; return; }
+      if (!termsAccepted){ msg.textContent = 'Please agree to the Terms of Service to continue.'; msg.className='auth-msg err'; return; }
       var users = getUsers();
       if (users[email]){ msg.textContent = 'An account with that email already exists.'; msg.className='auth-msg err'; return; }
-      users[email] = { firstName:first, lastName:last, email:email, password:pass, member:member, phone:'', avatar:'' };
+      users[email] = { firstName:first, lastName:last, email:email, password:pass, member:member, marketing:marketing, phone:'', avatar:'' };
       saveUsers(users);
       setSession(email);
       msg.textContent = 'Account created!'; msg.className='auth-msg ok';
       updateAuthUI();
       closeAuth();
+      if (marketing) subscribeToMarketing(users[email]);
       if (member){
         sendMembershipEmail(users[email]);
         toast('Welcome to SolarM Membership — check your email for your 15% off code.');

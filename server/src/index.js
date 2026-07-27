@@ -6,6 +6,7 @@ const webhookRouter = require('./routes/webhook');
 const paymentIntentRouter = require('./routes/paymentIntent');
 const bookingsRouter = require('./routes/bookings');
 const membershipEmailRouter = require('./routes/membershipEmail');
+const subscribeRouter = require('./routes/subscribe');
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use(express.json());
 app.use('/api', paymentIntentRouter);
 app.use('/api', bookingsRouter);
 app.use('/api', membershipEmailRouter);
+app.use('/api', subscribeRouter);
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 
