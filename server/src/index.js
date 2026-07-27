@@ -9,7 +9,23 @@ const membershipEmailRouter = require('./routes/membershipEmail');
 
 const app = express();
 
-app.use(cors({ origin: process.env.FRONTEND_ORIGIN || '*' }));
+// FRONTEND_ORIGIN can be a single URL or a comma-separated list (handy for
+// allowing both "example.com" and "www.example.com", which browsers treat
+// as two different origins even though they're "the same site" to a person).
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || '*')
+  .split(',')
+  .map(function(s){ return s.trim().replace(/\/$/, ''); })
+  .filter(Boolean);
+
+app.use(cors({
+  origin: function(origin, callback){
+    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)){
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS: ' + origin));
+    }
+  }
+}));
 
 // Mounted before express.json() — the Stripe webhook needs the raw request
 // body to verify its signature (see routes/webhook.js).
