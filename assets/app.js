@@ -1,12 +1,10 @@
 /* ── SITE CONFIG ──────────────────────────────────────────────
-   TEMPORARY: switched to Stripe TEST mode to verify the booking
-   flow without a real card. Swap back to the pk_live_... key
-   (and STRIPE_SECRET_KEY back to sk_live_... on Render) once the
-   test booking is confirmed working. See SETUP.md.
+   Points the frontend at the live backend and Stripe account.
+   See SETUP.md if either of these ever need to change.
 ------------------------------------------------------------- */
 window.SOLARM_CONFIG = {
   API_BASE: 'https://solarm-photography.onrender.com',
-  STRIPE_PUBLISHABLE_KEY: 'pk_test_51Rfu5qEV9HE8YRsnQKjxpB1ESxRoX05wsBn7DrbfJagIxuC2QmTTOMgyq5MFNhhjKv7M9VVcmj026fAQuaNZwmfe00SUkzzrSV'
+  STRIPE_PUBLISHABLE_KEY: 'pk_live_51Rfu5qEV9HE8YRsneg7nTefzwKBW2A00PdjCkKKmkRxx5HsLQ9dTkrCnhMb4UVzeayCYjkIC9mNAtlWECo9gsZqL004HFo5Gnx'
 };
 
 window.SolarM = (function(){
