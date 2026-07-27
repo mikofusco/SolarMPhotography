@@ -1,10 +1,10 @@
 /* ── SITE CONFIG ──────────────────────────────────────────────
-   TODO before going live: point these at your real backend and
-   Stripe publishable key. See SETUP.md for the full walkthrough.
+   Points the frontend at the live backend and Stripe account.
+   See SETUP.md if either of these ever need to change.
 ------------------------------------------------------------- */
 window.SOLARM_CONFIG = {
-  API_BASE: 'http://localhost:4242',
-  STRIPE_PUBLISHABLE_KEY: 'pk_test_TODO_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY'
+  API_BASE: 'https://solarm-photography.onrender.com',
+  STRIPE_PUBLISHABLE_KEY: 'pk_live_51Rfu5qEV9HE8YRsneg7nTefzwKBW2A00PdjCkKKmkRxx5HsLQ9dTkrCnhMb4UVzeayCYjkIC9mNAtlWECo9gsZqL004HFo5Gnx'
 };
 
 window.SolarM = (function(){
