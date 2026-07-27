@@ -2,13 +2,27 @@ const { Resend } = require('resend');
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
+// Dashboard env-var fields (Render, etc.) take a value literally, unlike a
+// .env file (parsed by dotenv), which strips surrounding quotes. Copying the
+// quoted example from .env.example straight into a dashboard field is an
+// easy mistake, so tolerate it here instead of failing every send.
+function unquote(value){
+  if (!value) return value;
+  const trimmed = value.trim();
+  if (trimmed.length >= 2 && trimmed[0] === '"' && trimmed[trimmed.length - 1] === '"'){
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+const FROM_EMAIL = unquote(process.env.RESEND_FROM_EMAIL);
+
 async function sendMembershipEmail({ to, firstName, code }){
   if (!resend) throw new Error('RESEND_API_KEY is not set — see SETUP.md');
   // The Resend SDK resolves with { data, error } instead of throwing on API
   // errors (bad key, unverified domain, invalid recipient), so an unchecked
   // result here would silently report success. Throw explicitly instead.
   const result = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL,
+    from: FROM_EMAIL,
     to,
     subject: 'Your SolarM Membership 15% off code',
     html: `
@@ -31,7 +45,7 @@ async function sendBookingNotification({ booking }){
   if (!to) throw new Error('PHOTOGRAPHER_NOTIFICATION_EMAIL is not set — see SETUP.md');
   const c = booking.customer || {};
   const result = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL,
+    from: FROM_EMAIL,
     to,
     subject: `New booking: ${booking.service} on ${booking.date}`,
     html: `
