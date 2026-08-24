@@ -3,6 +3,10 @@ const router = express.Router();
 const stripe = require('../stripe');
 const { computeAmount } = require('../services');
 
+// Matches assets/book.js's BLOCK_HOURS — the calendar buffer window for the
+// flat-rate services (the hourly service instead blocks its actual hours).
+const DEFAULT_BLOCK_HOURS = 2;
+
 function truncate(str, max){
   if (!str) return '';
   return String(str).slice(0, max);
@@ -10,11 +14,12 @@ function truncate(str, max){
 
 router.post('/create-payment-intent', async (req, res) => {
   try {
-    const { serviceId, promoCode, customerEmail, date, hour, customer } = req.body || {};
-    const computed = computeAmount(serviceId, promoCode);
+    const { serviceId, hours, promoCode, customerEmail, date, hour, customer } = req.body || {};
+    const computed = computeAmount(serviceId, promoCode, hours);
     if (!computed) return res.status(400).json({ error: 'Unknown service.' });
 
     const c = customer || {};
+    const blockHours = computed.service.hourly ? computed.hours : DEFAULT_BLOCK_HOURS;
 
     // Metadata is the recovery path: if the customer's browser closes right
     // after a successful charge (before the frontend can call POST
@@ -31,6 +36,8 @@ router.post('/create-payment-intent', async (req, res) => {
         promoApplied: String(computed.promoApplied),
         date: date || '',
         hour: hour != null ? String(hour) : '',
+        blockHours: String(blockHours),
+        hours: computed.service.hourly ? String(computed.hours) : '',
         customerFirstName: truncate(c.firstName, 200),
         customerLastName: truncate(c.lastName, 200),
         customerEmail: truncate(c.email || customerEmail, 200),

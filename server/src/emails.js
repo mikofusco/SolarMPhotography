@@ -51,8 +51,8 @@ async function sendBookingNotification({ booking }){
     html: `
       <div style="font-family:sans-serif;">
         <h2>New booking — #${booking.id}</h2>
-        <p><strong>Service:</strong> ${booking.service}</p>
-        <p><strong>Date/time:</strong> ${booking.date} at ${booking.hour}:00</p>
+        <p><strong>Service:</strong> ${booking.service}${booking.hours ? ` (${booking.hours} hours)` : ''}</p>
+        <p><strong>Date/time:</strong> ${booking.date} at ${booking.hour}:00${booking.hours ? ` until ${booking.hour + booking.hours}:00` : ''}</p>
         <p><strong>Total paid:</strong> $${Number(booking.total).toFixed(2)}</p>
         <hr>
         <p><strong>Customer:</strong> ${c.firstName || ''} ${c.lastName || ''}</p>

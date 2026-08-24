@@ -14,13 +14,19 @@
     return MONTH_NAMES[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
+  function fmtTime(b){
+    var start = fmtHour(b.hour);
+    if (!b.hours) return start;
+    return start + '–' + fmtHour(b.hour + b.hours) + ' (' + b.hours + (b.hours === 1 ? ' hr' : ' hrs') + ')';
+  }
+
   function bookingCard(b){
     var div = document.createElement('div');
     div.className = 'booking-card';
     div.innerHTML =
       '<div class="bk-main">' +
         '<h3>' + b.service + '</h3>' +
-        '<div class="bk-meta">' + fmtDate(b.date) + ' · ' + fmtHour(b.hour) + '</div>' +
+        '<div class="bk-meta">' + fmtDate(b.date) + ' · ' + fmtTime(b) + '</div>' +
         '<div class="bk-id">Confirmation #' + b.id + '</div>' +
       '</div>' +
       '<div class="bk-total">' +

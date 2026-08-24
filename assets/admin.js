@@ -22,6 +22,12 @@
     return hh + ':00 ' + period;
   }
 
+  function fmtTime(b){
+    var start = fmtHour(b.hour);
+    if (!b.hours) return start;
+    return start + '–' + fmtHour(b.hour + b.hours);
+  }
+
   function renderTable(bookings){
     document.getElementById('adminCount').textContent =
       bookings.length + (bookings.length === 1 ? ' booking' : ' bookings');
@@ -34,7 +40,7 @@
         '<td>' + escapeHtml(b.id) + '</td>' +
         '<td>' + escapeHtml(b.service) + '</td>' +
         '<td>' + escapeHtml(b.date) + '</td>' +
-        '<td>' + escapeHtml(fmtHour(b.hour)) + '</td>' +
+        '<td>' + escapeHtml(fmtTime(b)) + '</td>' +
         '<td>' + escapeHtml((c.firstName || '') + ' ' + (c.lastName || '')) + '</td>' +
         '<td>' + escapeHtml(c.email) + '</td>' +
         '<td>' + escapeHtml(c.phone) + '</td>' +

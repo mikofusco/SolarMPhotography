@@ -8,7 +8,7 @@ const { genConfirmationId } = require('../confirmationId');
 // Called by the frontend right after stripe.confirmPayment() resolves.
 router.post('/bookings', async (req, res) => {
   try {
-    const { paymentIntentId, service, date, hour, customer } = req.body || {};
+    const { paymentIntentId, service, date, hour, blockHours, hours, customer } = req.body || {};
     if (!paymentIntentId) return res.status(400).json({ error: 'Missing paymentIntentId.' });
 
     // Never trust the client's word that payment succeeded — re-check with
@@ -29,6 +29,8 @@ router.post('/bookings', async (req, res) => {
       service: (service && service.name) || paymentIntent.metadata.serviceName,
       date: date || paymentIntent.metadata.date,
       hour: hour != null ? hour : Number(paymentIntent.metadata.hour),
+      blockHours: blockHours != null ? blockHours : Number(paymentIntent.metadata.blockHours) || 2,
+      hours: hours != null ? hours : (paymentIntent.metadata.hours ? Number(paymentIntent.metadata.hours) : null),
       total: paymentIntent.amount / 100,
       customer: customer || {},
       createdAt: new Date().toISOString()

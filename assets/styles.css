@@ -165,7 +165,7 @@ nav.links a:hover{color:var(--gold-bright);}
 .about-credit{margin-top:26px;font-size:0.85rem;color:var(--muted);letter-spacing:0.02em;}
 
 /* ── SERVICES ────────────────────────────────────────── */
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
 .svc-card{
   background:linear-gradient(180deg,rgba(27,37,85,0.35),rgba(10,14,31,0.4));
   border:1px solid var(--line);border-radius:var(--radius);padding:32px 26px;
@@ -173,6 +173,7 @@ nav.links a:hover{color:var(--gold-bright);}
 }
 .svc-card:hover{border-color:rgba(205,163,74,0.45);transform:translateY(-4px);}
 .svc-card .svc-price{font-family:'Space Grotesk',sans-serif;font-size:2rem;color:var(--gold-bright);}
+.svc-card .svc-price-unit{font-size:1rem;color:var(--muted);font-weight:400;}
 .svc-card h3{font-size:1.2rem;}
 .svc-card p{color:var(--muted);font-size:0.92rem;flex:1;}
 .svc-note{font-size:0.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;}
@@ -199,7 +200,7 @@ nav.links a:hover{color:var(--gold-bright);}
 .step-panel h3{font-size:1.4rem;margin-bottom:6px;}
 .step-panel .step-sub{color:var(--muted);font-size:0.92rem;margin-bottom:28px;}
 
-.svc-choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.svc-choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
 .svc-choice{
   border:1px solid var(--line);border-radius:12px;padding:20px;text-align:left;background:rgba(255,255,255,0.02);
   display:flex;flex-direction:column;gap:8px;transition:border-color .15s ease, background .15s ease;
@@ -211,6 +212,13 @@ nav.links a:hover{color:var(--gold-bright);}
 .svc-choice.selected .radio-dot::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--gold-bright);}
 .svc-choice .price{color:var(--gold-bright);font-weight:600;}
 .svc-choice .desc{font-size:0.85rem;color:var(--muted);}
+.svc-choice .price .price-unit{font-size:0.85rem;color:var(--muted);font-weight:400;}
+.hour-picker{margin-top:6px;padding-top:12px;border-top:1px solid var(--line);}
+.hour-picker label{display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;}
+.hour-picker select{
+  width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:8px;
+  padding:9px 10px;color:var(--white);font-size:0.88rem;
+}
 
 .cal-time-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;}
 .calendar{border:1px solid var(--line);border-radius:12px;padding:20px;}
@@ -272,6 +280,7 @@ nav.links a:hover{color:var(--gold-bright);}
 .promo-msg{font-size:0.82rem;margin-top:6px;}
 .promo-msg.ok{color:var(--success);}
 .promo-msg.err{color:var(--danger);}
+.review-note{font-size:0.82rem;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line);}
 
 .pay-card{border:1px solid var(--line);border-radius:12px;padding:24px;}
 .pay-secure{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--muted);margin-bottom:18px;}

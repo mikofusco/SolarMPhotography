@@ -13,17 +13,23 @@
     { id:'korean', name:'Korean Style Portraits', price:329, priceLabel:'$329', deposit:329,
       desc:'Seoul-studio-inspired portrait session with a curated set of retouched images.', duration:90 },
     { id:'editorial', name:'Editorial Shoots', price:500, priceLabel:'$500–$750', deposit:500,
-      desc:'Full editorial/campaign shoot. Final price scoped to concept & deliverables. $500 deposit due today.', duration:120 }
+      desc:'Full editorial/campaign shoot. Final price scoped to concept & deliverables. $500 deposit due today.', duration:120 },
+    { id:'paparazzi', name:'Paparazzi Style', hourly:true, pricePerHour:30,
+      desc:'Plan your day together and get sneaky, candid shots that make you look like a celebrity. Transportation costs above $7 are billed separately after your session.' }
   ];
+  var MIN_HOURLY_HOURS = 2;
+  var MAX_HOURLY_HOURS = 8;
   var CLOSED_DAYS = [1]; // Monday closed
   var DAY_START = 9, DAY_END = 17; // 9am - 5pm start times
-  var BLOCK_HOURS = 2; // hours blocked after a booked start time
+  var BLOCK_HOURS = 2; // hours blocked after a booked start time, for flat-rate services
+  var CLOSING_HOUR = DAY_END + BLOCK_HOURS; // 7pm — latest any session may run until
   var MEMBER_CODE = window.SolarM.MEMBER_CODE;
 
   /* ── STATE ──────────────────────────────────────────────── */
   var state = {
     step: 1,
     service: null,
+    hours: null,             // only meaningful for hourly services
     date: null,
     time: null,
     customer: {},
@@ -73,16 +79,41 @@
     var div = document.createElement('div');
     div.className = 'svc-choice';
     div.dataset.id = svc.id;
+    var priceHtml = svc.hourly ? ('$' + svc.pricePerHour + '<span class="price-unit">/hr</span>') : svc.priceLabel;
     div.innerHTML =
       '<div style="display:flex;justify-content:space-between;align-items:center;">' +
         '<strong>' + svc.name + '</strong><span class="radio-dot"></span>' +
       '</div>' +
-      '<div class="price">' + svc.priceLabel + '</div>' +
+      '<div class="price">' + priceHtml + '</div>' +
       '<div class="desc">' + svc.desc + '</div>';
+
+    var hourSelect = null;
+    if (svc.hourly){
+      var hourWrap = document.createElement('div');
+      hourWrap.className = 'hour-picker';
+      var label = document.createElement('label');
+      label.textContent = 'How many hours? (' + MIN_HOURLY_HOURS + ' hr minimum)';
+      hourSelect = document.createElement('select');
+      for (var i = MIN_HOURLY_HOURS; i <= MAX_HOURLY_HOURS; i++){
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i + (i === 1 ? ' hour' : ' hours') + ' — $' + (svc.pricePerHour * i);
+        hourSelect.appendChild(opt);
+      }
+      hourSelect.addEventListener('click', function(e){ e.stopPropagation(); });
+      hourSelect.addEventListener('change', function(){
+        state.hours = +hourSelect.value;
+      });
+      hourWrap.appendChild(label);
+      hourWrap.appendChild(hourSelect);
+      div.appendChild(hourWrap);
+    }
+
     div.addEventListener('click', function(){
       state.service = svc;
       document.querySelectorAll('.svc-choice').forEach(function(c){ c.classList.remove('selected'); });
       div.classList.add('selected');
+      state.hours = svc.hourly ? +hourSelect.value : null;
       document.getElementById('toStep2').disabled = false;
     });
     svcGrid.appendChild(div);
@@ -171,19 +202,32 @@
     head.textContent = MONTH_NAMES[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
     col.innerHTML = '';
 
+    // How many hours THIS booking would occupy — the real hour count for the
+    // hourly service, or the fixed buffer window for everything else.
+    var blockLength = state.service.hourly ? state.hours : BLOCK_HOURS;
+
     var bookings = window.SolarM.getBookings().filter(function(b){ return b.date === key; });
     var blockedHours = [];
     bookings.forEach(function(b){
-      for (var h = b.hour; h < b.hour + BLOCK_HOURS; h++) blockedHours.push(h);
+      var len = b.blockHours || BLOCK_HOURS;
+      for (var h = b.hour; h < b.hour + len; h++) blockedHours.push(h);
     });
 
+    // A session can't start so late that it would still be running after
+    // closing (7pm, the same implicit boundary a fixed 2-hour session hits
+    // when it starts at the last 5pm slot).
+    var lastStart = Math.min(DAY_END, CLOSING_HOUR - blockLength);
+
     var any = false;
-    for (var h = DAY_START; h <= DAY_END; h++){
+    for (var h = DAY_START; h <= lastStart; h++){
       any = true;
       var slot = document.createElement('div');
-      var isBlocked = blockedHours.indexOf(h) !== -1;
+      var isBlocked = false;
+      for (var k = h; k < h + blockLength; k++){
+        if (blockedHours.indexOf(k) !== -1){ isBlocked = true; break; }
+      }
       slot.className = 'time-slot ' + (isBlocked ? 'blocked' : 'selectable');
-      slot.textContent = fmtHour(h);
+      slot.textContent = fmtHour(h) + (state.service.hourly ? ('–' + fmtHour(h + blockLength)) : '');
       if (state.time === h && !isBlocked) slot.classList.add('selected');
       if (!isBlocked){
         slot.addEventListener('click', function(hour){
@@ -197,7 +241,7 @@
       col.appendChild(slot);
     }
     if (!any){
-      col.innerHTML = '<div class="time-empty">No times available.</div>';
+      col.innerHTML = '<div class="time-empty">No times available for this many hours today.</div>';
     }
   }
 
@@ -253,25 +297,30 @@
     var d = new Date(state.date + 'T00:00:00');
     var dateStr = MONTH_NAMES[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
     var isEditorial = state.service.id === 'editorial';
+    var isHourly = !!state.service.hourly;
     var box = document.getElementById('reviewBox');
 
     // Until the server confirms the authoritative amount, show the sticker
     // price / naive 15% estimate. It's swapped for the server total in
     // startPaymentStep() once /api/create-payment-intent responds.
-    var base = state.service.deposit;
+    var base = isHourly ? state.service.pricePerHour * state.hours : state.service.deposit;
     var discount = state.promoApplied ? Math.round(base * 0.15 * 100) / 100 : 0;
     var total = state.serverAmount != null ? state.serverAmount / 100 : Math.round((base - discount) * 100) / 100;
+    var timeLabel = fmtHour(state.time) + (isHourly ? ('–' + fmtHour(state.time + state.hours)) : '');
 
     box.innerHTML =
       row('Service', state.service.name) +
       row('Date', dateStr) +
-      row('Time', fmtHour(state.time)) +
+      row('Time', timeLabel) +
       row('Name', state.customer.firstName + ' ' + state.customer.lastName) +
       row('Contact', state.customer.email + ' · ' + state.customer.phone) +
       row('Preferred contact', state.customer.contactMethod) +
-      (isEditorial ? row(state.service.priceLabel + ' — deposit today', '$' + base.toFixed(2)) : row('Price', '$' + base.toFixed(2))) +
+      (isEditorial ? row(state.service.priceLabel + ' — deposit today', '$' + base.toFixed(2)) :
+        isHourly ? row('Rate', '$' + state.service.pricePerHour + '/hr × ' + state.hours) :
+        row('Price', '$' + base.toFixed(2))) +
       (state.promoApplied ? row('Membership discount (15%)', '-$' + discount.toFixed(2)) : '') +
-      rowTotal('Total due today', '$' + total.toFixed(2));
+      rowTotal('Total due today', '$' + total.toFixed(2)) +
+      (isHourly ? '<div class="review-note">Transportation costs above $7 are billed separately after your session.</div>' : '');
     function row(k,v){ return '<div class="review-row"><span class="k">'+k+'</span><span>'+v+'</span></div>'; }
     function rowTotal(k,v){ return '<div class="review-row total"><span class="k">'+k+'</span><span>'+v+'</span></div>'; }
   }
@@ -315,6 +364,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         serviceId: state.service.id,
+        hours: state.service.hourly ? state.hours : null,
         promoCode: state.promoApplied ? MEMBER_CODE : null,
         customerEmail: state.customer.email,
         date: state.date,
@@ -397,6 +447,8 @@
         service: { id: state.service.id, name: state.service.name },
         date: state.date,
         hour: state.time,
+        blockHours: state.service.hourly ? state.hours : BLOCK_HOURS,
+        hours: state.service.hourly ? state.hours : null,
         customer: state.customer
       })
     })
@@ -419,11 +471,14 @@
   }
 
   function showConfirmation(confirmId, total){
+    var isHourly = !!state.service.hourly;
     var bookings = window.SolarM.getBookings();
     bookings.push({
       id: confirmId,
       date: state.date,
       hour: state.time,
+      blockHours: isHourly ? state.hours : BLOCK_HOURS,
+      hours: isHourly ? state.hours : null,
       service: state.service.name,
       total: total,
       customer: state.customer
@@ -432,12 +487,13 @@
 
     var d = new Date(state.date + 'T00:00:00');
     var dateStr = MONTH_NAMES[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    var timeLabel = fmtHour(state.time) + (isHourly ? ('–' + fmtHour(state.time + state.hours)) : '');
 
     document.getElementById('confirmId').textContent = 'Confirmation #' + confirmId;
     document.getElementById('confirmSummary').innerHTML =
       '<div class="review-row"><span class="k">Service</span><span>' + state.service.name + '</span></div>' +
       '<div class="review-row"><span class="k">Date</span><span>' + dateStr + '</span></div>' +
-      '<div class="review-row"><span class="k">Time</span><span>' + fmtHour(state.time) + '</span></div>' +
+      '<div class="review-row"><span class="k">Time</span><span>' + timeLabel + '</span></div>' +
       '<div class="review-row total"><span class="k">Paid</span><span>$' + total.toFixed(2) + '</span></div>';
 
     payBtn.disabled = false;
@@ -446,7 +502,7 @@
   }
 
   document.getElementById('bookAnotherBtn').addEventListener('click', function(){
-    state.service = null; state.date = null; state.time = null; state.promoApplied = false;
+    state.service = null; state.hours = null; state.date = null; state.time = null; state.promoApplied = false;
     state.serverAmount = null; state.clientSecret = null; state.paymentIntentId = null;
     document.querySelectorAll('.svc-choice').forEach(function(c){ c.classList.remove('selected'); });
     document.getElementById('toStep2').disabled = true;
