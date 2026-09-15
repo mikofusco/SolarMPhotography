@@ -14,8 +14,8 @@ function truncate(str, max){
 
 router.post('/create-payment-intent', async (req, res) => {
   try {
-    const { serviceId, hours, promoCode, customerEmail, date, hour, customer } = req.body || {};
-    const computed = computeAmount(serviceId, promoCode, hours);
+    const { serviceId, hours, photos, promoCode, customerEmail, date, hour, customer } = req.body || {};
+    const computed = computeAmount(serviceId, promoCode, { hours, photos });
     if (!computed) return res.status(400).json({ error: 'Unknown service.' });
 
     const c = customer || {};
@@ -38,6 +38,7 @@ router.post('/create-payment-intent', async (req, res) => {
         hour: hour != null ? String(hour) : '',
         blockHours: String(blockHours),
         hours: computed.service.hourly ? String(computed.hours) : '',
+        photos: computed.service.customPhotos ? String(computed.photos) : '',
         customerFirstName: truncate(c.firstName, 200),
         customerLastName: truncate(c.lastName, 200),
         customerEmail: truncate(c.email || customerEmail, 200),

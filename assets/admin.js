@@ -41,6 +41,7 @@
         '<td>' + escapeHtml(b.service) + '</td>' +
         '<td>' + escapeHtml(b.date) + '</td>' +
         '<td>' + escapeHtml(fmtTime(b)) + '</td>' +
+        '<td>' + escapeHtml(b.photos != null ? b.photos : '') + '</td>' +
         '<td>' + escapeHtml((c.firstName || '') + ' ' + (c.lastName || '')) + '</td>' +
         '<td>' + escapeHtml(c.email) + '</td>' +
         '<td>' + escapeHtml(c.phone) + '</td>' +

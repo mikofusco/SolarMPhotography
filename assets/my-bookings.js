@@ -26,7 +26,7 @@
     div.innerHTML =
       '<div class="bk-main">' +
         '<h3>' + b.service + '</h3>' +
-        '<div class="bk-meta">' + fmtDate(b.date) + ' · ' + fmtTime(b) + '</div>' +
+        '<div class="bk-meta">' + fmtDate(b.date) + ' · ' + fmtTime(b) + (b.photos ? ' · ' + b.photos + (b.photos === 1 ? ' photo' : ' photos') : '') + '</div>' +
         '<div class="bk-id">Confirmation #' + b.id + '</div>' +
       '</div>' +
       '<div class="bk-total">' +

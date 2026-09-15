@@ -36,6 +36,7 @@ router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async 
           hour: m.hour ? Number(m.hour) : null,
           blockHours: m.blockHours ? Number(m.blockHours) : 2,
           hours: m.hours ? Number(m.hours) : null,
+          photos: m.photos ? Number(m.photos) : null,
           total: paymentIntent.amount / 100,
           customer: {
             firstName: m.customerFirstName || '',
