@@ -441,3 +441,78 @@ footer{border-top:1px solid var(--line);padding:50px 0 34px;color:var(--muted);f
     display:flex;flex-direction:column;gap:10px;margin-top:6px;padding-top:16px;border-top:1px solid var(--line);
   }
 }
+
+/* ── HAUS OF K CUSTOM QUOTE ───────────────────────────────── */
+.hok-header-right{display:flex;align-items:center;gap:16px;}
+.hok-subtitle{color:var(--muted);font-size:0.85rem;}
+.hok-layout{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start;}
+.hok-builder{display:flex;flex-direction:column;gap:24px;}
+.hok-panel{
+  background:linear-gradient(180deg,rgba(16,24,56,0.4),rgba(5,6,9,0.4));
+  border:1px solid var(--line);border-radius:20px;padding:32px;
+}
+.hok-panel h2{font-size:1.2rem;margin-bottom:8px;}
+.hok-option-grid{display:grid;gap:12px;margin-top:16px;}
+.option-row{
+  display:flex;align-items:flex-start;gap:14px;border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;background:rgba(255,255,255,0.02);transition:border-color .15s ease,background .15s ease;cursor:pointer;
+}
+.option-row:hover{border-color:rgba(205,163,74,0.4);}
+.option-row input[type=checkbox],.option-row input[type=radio]{margin-top:3px;accent-color:var(--gold);flex:none;}
+.option-row.selected{border-color:var(--gold-bright);background:rgba(205,163,74,0.08);}
+.option-row.disabled{opacity:0.45;cursor:default;}
+.option-main{flex:1;display:flex;flex-direction:column;gap:3px;}
+.option-label{font-weight:600;color:var(--white);font-size:0.95rem;}
+.option-desc{font-size:0.82rem;color:var(--muted);}
+.option-price{font-family:'Space Grotesk',sans-serif;color:var(--gold-bright);font-weight:600;white-space:nowrap;flex:none;}
+.option-row-qty{cursor:default;align-items:center;}
+.option-qty-input{
+  width:64px;text-align:center;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:8px;
+  padding:8px;color:var(--white);flex:none;font-family:inherit;font-size:0.9rem;
+}
+.option-select{
+  background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:8px;padding:8px 10px;
+  color:var(--white);flex:none;font-family:inherit;font-size:0.85rem;max-width:160px;
+}
+
+.hok-receipt{
+  position:sticky;top:100px;border:1px solid var(--line);border-radius:20px;padding:28px;
+  background:linear-gradient(180deg,rgba(16,24,56,0.55),rgba(5,6,9,0.55));
+}
+.hok-receipt h3{font-size:1.1rem;margin-bottom:16px;}
+.hok-receipt-line{display:flex;justify-content:space-between;gap:10px;font-size:0.85rem;padding:8px 0;border-bottom:1px solid var(--line);}
+.hok-receipt-line .hrl-label{color:var(--offwhite);display:block;}
+.hok-receipt-line .hrl-qty{color:var(--muted);font-size:0.78rem;display:block;}
+.hok-receipt-line .hrl-amt{color:var(--gold-bright);font-weight:600;white-space:nowrap;flex:none;}
+.hok-receipt-empty{color:var(--muted);font-size:0.85rem;padding:12px 0;}
+.hok-receipt-total{
+  display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;
+  border-top:1px solid var(--line);font-size:1.2rem;font-weight:700;color:var(--gold-bright);
+  font-family:'Space Grotesk',sans-serif;
+}
+.hok-receipt-note{font-size:0.78rem;color:var(--muted);margin-top:14px;}
+
+.hok-terms-table{border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.hok-terms-row{display:grid;grid-template-columns:140px 1fr;gap:16px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:0.86rem;}
+.hok-terms-row:last-child{border-bottom:none;}
+.hok-terms-row .htr-term{color:var(--gold-bright);font-weight:600;}
+.hok-terms-row .htr-detail{color:var(--offwhite);opacity:0.9;}
+
+.hok-pay-methods{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+.hok-pay-detail{border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:4px;}
+.hok-pay-detail h4{font-size:0.95rem;margin-bottom:10px;color:var(--gold-bright);}
+.hok-pay-detail p{font-size:0.88rem;margin-bottom:8px;}
+.hok-pay-detail code{background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:6px;font-family:'Space Grotesk',sans-serif;color:var(--gold-bright);}
+.hok-pay-detail .memo-note{margin-top:10px;font-size:0.82rem;color:var(--gold-bright);}
+.hok-pay-detail .btn{margin-top:14px;}
+
+@media (max-width:900px){
+  .hok-layout{grid-template-columns:1fr;}
+  .hok-receipt{position:static;}
+  .hok-pay-methods{grid-template-columns:1fr;}
+  .hok-terms-row{grid-template-columns:1fr;gap:4px;}
+}
+
+@media (max-width:560px){
+  .hok-subtitle{display:none;}
+}

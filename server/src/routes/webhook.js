@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('../stripe');
 const store = require('../store');
-const { sendBookingNotification } = require('../emails');
+const hausOfKStore = require('../hausOfKStore');
+const { sendBookingNotification, sendHausOfKNotification } = require('../emails');
 const { genConfirmationId } = require('../confirmationId');
 
 // Stripe needs the raw (unparsed) body to verify the signature, so this
@@ -19,6 +20,43 @@ router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async 
 
   if (event.type === 'payment_intent.succeeded'){
     const paymentIntent = event.data.object;
+    const m = paymentIntent.metadata || {};
+
+    if (m.quoteType === 'haus-of-k'){
+      try {
+        const existing = hausOfKStore.findQuoteByPaymentIntent(paymentIntent.id);
+        if (!existing){
+          // Safety net for the HAUS OF K quote page: if the browser never
+          // finishes the POST /api/haus-of-k/submit call after a successful
+          // charge, reconstruct a minimal record from the PaymentIntent's own
+          // metadata instead of losing the payment entirely. It won't have
+          // the full line-item breakdown — check the Stripe dashboard for that.
+          const quote = {
+            id: genConfirmationId(),
+            selections: { coverageType: m.coverageType || '', hours: m.hours ? Number(m.hours) : null },
+            lines: [],
+            buyoutInterest: false,
+            total: paymentIntent.amount / 100,
+            date: m.date || '',
+            time: m.time || '',
+            customer: { name: m.customerName || '', email: m.customerEmail || '', phone: m.customerPhone || '' },
+            payMethod: 'stripe',
+            paymentIntentId: paymentIntent.id,
+            status: 'paid',
+            createdAt: new Date().toISOString(),
+            recoveredByWebhook: true
+          };
+          await hausOfKStore.appendQuote(quote);
+          sendHausOfKNotification({ quote }).catch(function(err){
+            console.warn('HAUS OF K notification email failed:', err.message);
+          });
+        }
+      } catch (err) {
+        console.error('Webhook HAUS OF K recovery failed:', err);
+      }
+      return res.json({ received: true });
+    }
+
     try {
       const existing = store.findBookingByPaymentIntent(paymentIntent.id);
       if (!existing){
@@ -27,7 +65,6 @@ router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async 
         // when a customer closes the tab (or the network drops) between a
         // successful charge and that call — the booking is reconstructed
         // here from the metadata stored when the PaymentIntent was created.
-        const m = paymentIntent.metadata || {};
         const booking = {
           id: genConfirmationId(),
           paymentIntentId: paymentIntent.id,

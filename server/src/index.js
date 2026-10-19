@@ -7,6 +7,7 @@ const paymentIntentRouter = require('./routes/paymentIntent');
 const bookingsRouter = require('./routes/bookings');
 const membershipEmailRouter = require('./routes/membershipEmail');
 const subscribeRouter = require('./routes/subscribe');
+const hausOfKRouter = require('./routes/hausOfK');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/api', paymentIntentRouter);
 app.use('/api', bookingsRouter);
 app.use('/api', membershipEmailRouter);
 app.use('/api', subscribeRouter);
+app.use('/api', hausOfKRouter);
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 
