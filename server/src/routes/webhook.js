@@ -3,7 +3,8 @@ const router = express.Router();
 const stripe = require('../stripe');
 const store = require('../store');
 const hausOfKStore = require('../hausOfKStore');
-const { sendBookingNotification, sendHausOfKNotification } = require('../emails');
+const customQuoteStore = require('../customQuoteStore');
+const { sendBookingNotification, sendHausOfKNotification, sendCustomQuoteNotification } = require('../emails');
 const { genConfirmationId } = require('../confirmationId');
 
 // Stripe needs the raw (unparsed) body to verify the signature, so this
@@ -53,6 +54,42 @@ router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async 
         }
       } catch (err) {
         console.error('Webhook HAUS OF K recovery failed:', err);
+      }
+      return res.json({ received: true });
+    }
+
+    if (m.quoteType === 'custom-quote'){
+      try {
+        const existing = customQuoteStore.findQuoteByPaymentIntent(paymentIntent.id);
+        if (!existing){
+          // Safety net for the public custom-quote page: if the browser never
+          // finishes the POST /api/custom-quote/submit call after a successful
+          // charge, reconstruct a minimal record from the PaymentIntent's own
+          // metadata instead of losing the payment entirely. It won't have
+          // the full line-item breakdown — check the Stripe dashboard for that.
+          const quote = {
+            id: genConfirmationId(),
+            selections: { coverageType: m.coverageType || '', hours: m.hours ? Number(m.hours) : null },
+            description: m.description || '',
+            lines: [],
+            buyoutInterest: false,
+            total: paymentIntent.amount / 100,
+            date: m.date || '',
+            time: m.time || '',
+            customer: { name: m.customerName || '', email: m.customerEmail || '', phone: m.customerPhone || '' },
+            payMethod: 'stripe',
+            paymentIntentId: paymentIntent.id,
+            status: 'paid',
+            createdAt: new Date().toISOString(),
+            recoveredByWebhook: true
+          };
+          await customQuoteStore.appendQuote(quote);
+          sendCustomQuoteNotification({ quote }).catch(function(err){
+            console.warn('Custom quote notification email failed:', err.message);
+          });
+        }
+      } catch (err) {
+        console.error('Webhook custom-quote recovery failed:', err);
       }
       return res.json({ received: true });
     }

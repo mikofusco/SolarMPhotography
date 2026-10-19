@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Quote — SolarM Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  body{font-family:'Inter','Noto Sans KR',sans-serif;}
+  .lang-ko{display:none;}
+  body.lang-is-ko .lang-en{display:none;}
+  body.lang-is-ko .lang-ko{display:inline;}
+  body.lang-is-ko span.lang-ko, body.lang-is-ko p.lang-ko, body.lang-is-ko div.lang-ko, body.lang-is-ko h1.lang-ko, body.lang-is-ko h2.lang-ko, body.lang-is-ko h3.lang-ko{display:block;}
+  body.lang-is-ko span.lang-ko{display:inline;}
+  #cqDescCounter{font-size:0.78rem;color:var(--muted);text-align:right;margin-top:4px;}
+  #cqDescCounter.ok{color:var(--gold-bright);}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="eclipse-mark"></span>SolarM Photography</a>
+    <div class="hok-header-right">
+      <span class="hok-subtitle lang-en">Custom Quote</span>
+      <span class="hok-subtitle lang-ko">맞춤 견적</span>
+      <button class="btn btn-ghost btn-sm" id="langToggle" type="button">한국어 / EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow lang-en">Custom Quote</span>
+      <span class="eyebrow lang-ko">맞춤 견적</span>
+      <h1 class="lang-en">Build Your Custom Quote</h1>
+      <h1 class="lang-ko">맞춤 견적 만들기</h1>
+      <p class="lang-en">Build your package below — your total updates as you go. Prepared by Miko Fusco, SolarM Photography. All prices in USD.</p>
+      <p class="lang-ko">아래에서 패키지를 구성해 보세요 — 선택하실 때마다 합계가 자동으로 업데이트됩니다. SolarM Photography의 Miko Fusco가 드리는 견적입니다. 모든 금액은 미국 달러(USD) 기준입니다.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="wrap">
+      <div class="hok-layout">
+        <div class="hok-builder">
+
+          <!-- COVERAGE -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Coverage</h2>
+            <h2 class="lang-ko">촬영</h2>
+            <p class="step-sub lang-en">On-site capture only — editing is priced separately below. Every rate includes arrival, setup, and file backup on the day. Extra time beyond booked hours is billed at the same hourly rate in 30-minute increments.</p>
+            <p class="step-sub lang-ko">현장 촬영만 포함되며, 편집 비용은 아래에 별도로 안내됩니다. 모든 요금에는 당일 도착, 장비 세팅, 파일 백업이 포함됩니다. 예약된 시간을 초과하는 경우 동일한 시간당 요금으로 30분 단위로 청구됩니다.</p>
+            <div id="coverageOptions" class="hok-option-grid"></div>
+            <div class="field" style="margin-top:18px;max-width:240px;">
+              <label class="lang-en">Hours needed (2 hr minimum)</label>
+              <label class="lang-ko">필요 시간 (최소 2시간)</label>
+              <select id="hokHours"></select>
+            </div>
+            <div id="coverageAddons"></div>
+          </div>
+
+          <!-- PHOTO EDITING -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Photo Editing</h2>
+            <h2 class="lang-ko">사진 편집</h2>
+            <p class="step-sub lang-en">Every edited image is culled, color-corrected, exposure-balanced, and cropped, delivered as high-res JPEGs plus web-sized copies in an online gallery.</p>
+            <p class="step-sub lang-ko">모든 편집 사진은 선별, 색 보정, 노출 조정, 크롭 작업을 거쳐 고해상도 JPEG 파일과 웹용 사이즈 파일로 온라인 갤러리를 통해 전달됩니다.</p>
+            <div id="photoEditingOptions" class="hok-option-grid"></div>
+          </div>
+
+          <!-- VIDEO EDITING -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Video Editing</h2>
+            <h2 class="lang-ko">영상 편집</h2>
+            <p class="step-sub lang-en">Each edit includes music licensing for social use, color correction, audio cleanup, and one consolidated round of revisions.</p>
+            <p class="step-sub lang-ko">모든 편집에는 SNS용 음원 라이선스, 색 보정, 오디오 정리, 그리고 통합 수정 1회가 포함됩니다.</p>
+            <div id="videoEditingOptions" class="hok-option-grid"></div>
+          </div>
+
+          <!-- USAGE RIGHTS -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Usage Rights</h2>
+            <h2 class="lang-ko">사용 권한</h2>
+            <p class="step-sub lang-en">Your own use is included in every package at no extra cost — you may use all delivered photos and videos with no time limit on your own website, social media, newsletters, and internal communications. Add-ons below apply only when content goes beyond your own channels.</p>
+            <p class="step-sub lang-ko">귀하의 자체 사용은 모든 패키지에 추가 비용 없이 포함됩니다 — 전달된 모든 사진과 영상을 귀하의 웹사이트, 소셜 미디어, 뉴스레터, 내부 커뮤니케이션에 기간 제한 없이 사용하실 수 있습니다. 아래 추가 옵션은 콘텐츠가 자체 채널 외에서 사용될 경우에만 적용됩니다.</p>
+            <div id="usageRightsOptions" class="hok-option-grid"></div>
+          </div>
+
+          <!-- EVENT DESCRIPTION -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Tell Us About Your Event</h2>
+            <h2 class="lang-ko">행사/세션에 대해 알려주세요</h2>
+            <p class="step-sub lang-en">Describe what you need — the type of event or session, the location, what you want captured, and anything else that helps build an accurate quote. (100 characters minimum)</p>
+            <p class="step-sub lang-ko">필요한 내용을 알려주세요 — 행사/세션 종류, 장소, 촬영하고 싶은 내용 등 정확한 견적 산정에 도움이 되는 정보를 적어주세요. (최소 100자)</p>
+            <div class="field">
+              <label class="lang-en">Description <span class="req">*</span></label>
+              <label class="lang-ko">설명 <span class="req">*</span></label>
+              <textarea id="cqDescription" rows="6"></textarea>
+              <div class="error-text"></div>
+              <div id="cqDescCounter">0 / 100</div>
+            </div>
+          </div>
+
+          <!-- DATE & TIME -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Date &amp; Time</h2>
+            <h2 class="lang-ko">날짜 및 시간</h2>
+            <div class="form-grid">
+              <div class="field">
+                <label class="lang-en">Date <span class="req">*</span></label>
+                <label class="lang-ko">날짜 <span class="req">*</span></label>
+                <input type="date" id="hokDate" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label class="lang-en">Start time <span class="req">*</span></label>
+                <label class="lang-ko">시작 시간 <span class="req">*</span></label>
+                <input type="time" id="hokTime" required>
+                <div class="error-text"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTACT -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Your Info</h2>
+            <h2 class="lang-ko">담당자 정보</h2>
+            <div class="form-grid">
+              <div class="field">
+                <label class="lang-en">Name <span class="req">*</span></label>
+                <label class="lang-ko">이름 <span class="req">*</span></label>
+                <input type="text" id="hokName" autocomplete="name" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field">
+                <label class="lang-en">Email <span class="req">*</span></label>
+                <label class="lang-ko">이메일 <span class="req">*</span></label>
+                <input type="email" id="hokEmail" autocomplete="email" required>
+                <div class="error-text"></div>
+              </div>
+              <div class="field full">
+                <label class="lang-en">Phone <span class="req">*</span></label>
+                <label class="lang-ko">전화번호 <span class="req">*</span></label>
+                <input type="tel" id="hokPhone" autocomplete="tel" required>
+                <div class="error-text"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TERMS -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Terms</h2>
+            <h2 class="lang-ko">계약 조건</h2>
+            <div class="hok-terms-table">
+              <div class="hok-terms-row">
+                <div class="htr-term"><span class="lang-en">Booking</span><span class="lang-ko">예약</span></div>
+                <div class="htr-detail">
+                  <span class="lang-en">50% non-refundable deposit holds the date; balance due on delivery</span>
+                  <span class="lang-ko">날짜 확정 시 환불 불가 계약금 50%, 잔금은 납품 시 지불</span>
+                </div>
+              </div>
+              <div class="hok-terms-row">
+                <div class="htr-term"><span class="lang-en">Turnaround</span><span class="lang-ko">납품 기간</span></div>
+                <div class="htr-detail">
+                  <span class="lang-en">Photos in 5 business days; video edits in 10–14 business days (unless booked with Rush)</span>
+                  <span class="lang-ko">사진은 영업일 기준 5일, 영상은 영업일 기준 10–14일 (긴급 납품 선택 시 제외)</span>
+                </div>
+              </div>
+              <div class="hok-terms-row">
+                <div class="htr-term"><span class="lang-en">Revisions</span><span class="lang-ko">수정</span></div>
+                <div class="htr-detail">
+                  <span class="lang-en">One consolidated round per video included</span>
+                  <span class="lang-ko">영상당 통합 수정 1회 포함</span>
+                </div>
+              </div>
+              <div class="hok-terms-row">
+                <div class="htr-term"><span class="lang-en">Travel</span><span class="lang-ko">출장</span></div>
+                <div class="htr-detail">
+                  <span class="lang-en">Included within NYC; parking, tolls, and travel outside NYC billed at cost</span>
+                  <span class="lang-ko">뉴욕시 내 무료; 주차비, 통행료, 뉴욕시 외 출장비는 실비 청구</span>
+                </div>
+              </div>
+              <div class="hok-terms-row">
+                <div class="htr-term"><span class="lang-en">Cancellation</span><span class="lang-ko">취소</span></div>
+                <div class="htr-detail">
+                  <span class="lang-en">4+ days out: deposit applies to a rescheduled date within 90 days. Under 4 days: 50% of coverage fee</span>
+                  <span class="lang-ko">4일 이상 전 취소: 계약금은 90일 이내 변경된 일정에 적용. 4일 미만 전 취소: 촬영비의 50%</span>
+                </div>
+              </div>
+              <div class="hok-terms-row">
+                <div class="htr-term"><span class="lang-en">File storage</span><span class="lang-ko">파일 보관</span></div>
+                <div class="htr-detail">
+                  <span class="lang-en">Gallery and footage kept for 60 days after delivery</span>
+                  <span class="lang-ko">납품 후 60일간 갤러리 및 영상 보관</span>
+                </div>
+              </div>
+              <div class="hok-terms-row">
+                <div class="htr-term"><span class="lang-en">Final schedule</span><span class="lang-ko">최종 일정</span></div>
+                <div class="htr-detail">
+                  <span class="lang-en">Exact hours and deliverables confirmed in writing before the session</span>
+                  <span class="lang-ko">정확한 시간과 결과물은 촬영 전 서면으로 확정</span>
+                </div>
+              </div>
+            </div>
+            <label class="check-row" style="margin-top:18px;">
+              <input type="checkbox" id="hokTerms" required>
+              <span>
+                <span class="lang-en">I have read and agree to the terms above. <span class="req">*</span></span>
+                <span class="lang-ko">위 계약 조건을 읽었으며 이에 동의합니다. <span class="req">*</span></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- PAYMENT -->
+          <div class="hok-panel">
+            <h2 class="lang-en">Payment</h2>
+            <h2 class="lang-ko">결제</h2>
+            <div class="hok-pay-methods" id="hokPayMethods">
+              <label class="option-row" data-pay="zelle">
+                <input type="radio" name="payMethod" value="zelle">
+                <span class="option-main"><span class="option-label">Zelle</span></span>
+              </label>
+              <label class="option-row" data-pay="paypal">
+                <input type="radio" name="payMethod" value="paypal">
+                <span class="option-main"><span class="option-label">PayPal</span></span>
+              </label>
+              <label class="option-row" data-pay="stripe">
+                <input type="radio" name="payMethod" value="stripe">
+                <span class="option-main">
+                  <span class="option-label lang-en">Stripe (Card)</span>
+                  <span class="option-label lang-ko">Stripe (카드)</span>
+                </span>
+              </label>
+              <label class="option-row" data-pay="bank">
+                <input type="radio" name="payMethod" value="bank">
+                <span class="option-main">
+                  <span class="option-label lang-en">Bank Transfer</span>
+                  <span class="option-label lang-ko">계좌 이체</span>
+                </span>
+              </label>
+            </div>
+            <div id="hokPayDetail"></div>
+            <div class="auth-msg" id="hokMsg" style="margin-top:14px;"></div>
+          </div>
+
+        </div>
+
+        <!-- RECEIPT -->
+        <aside class="hok-receipt">
+          <h3 class="lang-en">Your Package</h3>
+          <h3 class="lang-ko">선택하신 패키지</h3>
+          <div id="hokReceiptLines"></div>
+          <div class="hok-receipt-total">
+            <span class="lang-en">Total</span>
+            <span class="lang-ko">합계</span>
+            <span id="hokReceiptTotal">$0</span>
+          </div>
+          <p class="hok-receipt-note lang-en" id="hokBuyoutNoteEn" style="display:none;">Full buyout noted — we'll follow up with a custom quote separately.</p>
+          <p class="hok-receipt-note lang-ko" id="hokBuyoutNoteKo" style="display:none;">완전 매입 요청이 접수되었습니다 — 별도로 맞춤 견적을 안내드리겠습니다.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-bottom" style="border-top:1px solid var(--line);padding-top:22px;">
+    <span class="lang-en">&copy; <span id="year"></span> SolarM Photography. All rights reserved.</span>
+    <span class="lang-ko">&copy; <span id="year2"></span> SolarM Photography. All rights reserved.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/customQuotePricing.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="assets/customQuote.js"></script>
+</body>
+</html>

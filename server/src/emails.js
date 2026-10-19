@@ -121,4 +121,42 @@ async function sendHausOfKNotification({ quote }){
   return result.data;
 }
 
-module.exports = { sendMembershipEmail, sendBookingNotification, addMarketingContact, sendHausOfKNotification };
+async function sendCustomQuoteNotification({ quote }){
+  if (!resend) throw new Error('RESEND_API_KEY is not set — see SETUP.md');
+  const to = process.env.PHOTOGRAPHER_NOTIFICATION_EMAIL;
+  if (!to) throw new Error('PHOTOGRAPHER_NOTIFICATION_EMAIL is not set — see SETUP.md');
+  const c = quote.customer || {};
+  const linesHtml = (quote.lines || []).map(function(l){
+    return `<tr><td style="padding:4px 10px 4px 0;">${l.label && l.label.en}${l.qty > 1 ? ' × ' + l.qty : ''}</td><td style="padding:4px 0;text-align:right;">$${Number(l.amount).toFixed(2)}</td></tr>`;
+  }).join('');
+  const statusLine = quote.status === 'paid'
+    ? 'Paid via Stripe — funds already received.'
+    : `Awaiting manual payment via ${PAY_METHOD_LABELS[quote.payMethod] || quote.payMethod} — confirm once the money arrives (memo should read "${quote.id}").`;
+
+  const result = await resend.emails.send({
+    from: FROM_EMAIL,
+    to,
+    subject: `Custom quote submitted — $${Number(quote.total).toFixed(2)} (${quote.id})`,
+    html: `
+      <div style="font-family:sans-serif;">
+        <h2>Custom quote — #${quote.id}</h2>
+        <p><strong>Status:</strong> ${statusLine}</p>
+        <p><strong>Date/time:</strong> ${quote.date} at ${quote.time}</p>
+        <p><strong>Description:</strong></p>
+        <p style="white-space:pre-wrap;background:#f7f5f2;border-radius:8px;padding:12px;">${quote.description || ''}</p>
+        <table style="border-collapse:collapse;width:100%;max-width:480px;">${linesHtml}</table>
+        <p style="font-size:18px;"><strong>Total: $${Number(quote.total).toFixed(2)}</strong></p>
+        ${quote.buyoutInterest ? '<p><strong>Note:</strong> Client also checked the full buyout / copyright transfer box — follow up with a custom quote.</p>' : ''}
+        <hr>
+        <p><strong>Contact:</strong> ${c.name || ''}</p>
+        <p><strong>Email:</strong> ${c.email || ''}</p>
+        <p><strong>Phone:</strong> ${c.phone || ''}</p>
+        <p><strong>Payment method:</strong> ${PAY_METHOD_LABELS[quote.payMethod] || quote.payMethod}</p>
+      </div>
+    `
+  });
+  if (result.error) throw new Error(result.error.message || 'Resend rejected the email.');
+  return result.data;
+}
+
+module.exports = { sendMembershipEmail, sendBookingNotification, addMarketingContact, sendHausOfKNotification, sendCustomQuoteNotification };
