@@ -146,6 +146,7 @@
     renderCoverageOptions();
     renderCoverageAddons();
     renderReceipt();
+    retryStripeIfPending();
   });
 
   function renderCoverageOptions(){
@@ -176,6 +177,7 @@
         state.coverageType = c.id;
         renderCoverageOptions();
         renderReceipt();
+        retryStripeIfPending();
       });
       container.appendChild(row);
     });
@@ -547,7 +549,9 @@
       return;
     }
     if (!validateForm()){
-      if (msgEl) msgEl.textContent = state.lang === 'ko' ? '먼저 위 필수 항목을 완료해 주세요.' : 'Please complete the required fields above first.';
+      if (msgEl) msgEl.textContent = state.lang === 'ko'
+        ? '먼저 위 필수 항목을 모두 완료해 주세요 — 완료되면 결제 양식이 자동으로 나타납니다.'
+        : 'Please finish the required fields above first — the payment form will appear here automatically once they\'re complete.';
       return;
     }
     container.textContent = state.lang === 'ko' ? '결제 양식을 불러오는 중…' : 'Loading payment form…';
@@ -655,6 +659,20 @@
           : 'Payment received. We will follow up to confirm details.';
       });
   }
+
+  // Stripe is only mounted once every required field validates (the server
+  // needs the full payload to create the PaymentIntent). If the customer
+  // picks Stripe before finishing the rest of the form, nothing would ever
+  // re-trigger the mount attempt — so every required field also retries it
+  // here once it's filled in, instead of leaving the payment box blank.
+  function retryStripeIfPending(){
+    if (state.payMethod === 'stripe' && !elements) startStripePayment();
+  }
+  ['hokDate', 'hokTime', 'hokName', 'hokEmail', 'hokPhone'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('change', retryStripeIfPending);
+  });
+  document.getElementById('hokTerms').addEventListener('change', retryStripeIfPending);
 
   /* ── LANGUAGE TOGGLE ────────────────────────────────────── */
   function setLang(lang){
